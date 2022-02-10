@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-
 <html lang="en">
-	<head>
-	</head>
+    <head>
+        <title>Demo Page</title>
+    </head>
+    <body>
+        <h1>Demo For Wednesday</h1>
+        <p>
+            A paragraph of text.
 
-	<body>
-		<h1>Hello world from Zach!</h1>
-	</body>
-<html>
+            <?php
+                echo("<!-- This is PHP! -->");
+            ?>
+        </p>
+    </body>
+</html>
