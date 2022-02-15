@@ -5,6 +5,14 @@
 	</head>
 
 	<body>
-		<h1>Hello world from Zach!</h1>
+		<header>
+
+		</header>
+		<main>
+			<h1>Hello world from Zach!</h1>
+		</main>
+		<footer>
+
+		</footer>
 	</body>
 <html>
