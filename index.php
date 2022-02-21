@@ -14,7 +14,7 @@
 			<p>
 				A paragraph of text.
 				<?php
-                	echo("<!-- This is PHP! -->");
+                	echo "Today is " . date("Y/m/d") . "<br>";
 				?>
 			</p>
 			<button class="say-hi" type="button" data-message="Hello world!!">Hello world</button>
