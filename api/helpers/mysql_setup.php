@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 class Connection {
 	private $host = null;
 	private $user = null;
@@ -16,8 +20,13 @@ class Connection {
 			$this->pass = $settings ['password'] ?? null;
 			$this->db = $settings['schema'] ?? null;
 			$this->mysqli = new mysqli($this->host, $this->user, $this->pass, $this->db);
-		}
-		catch (exception $e) {
+
+			if ($this->mysqli-> connect_errno) {
+				echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+				exit();
+			}
+			// echo $mysqli -> query('call get_test_data');
+		} catch (exception $e) {
 			exit($e->getMessage());
 		}
 	}
