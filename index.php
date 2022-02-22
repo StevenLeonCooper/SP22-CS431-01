@@ -15,9 +15,21 @@
             </nav>
 		</header>
 		<main>
+<<<<<<< HEAD
 		    <h1>Demo For Wednesday</h1>
 			<div id="<?php echo ("view_$page") ?>">&nbsp;</div>
         </main>
+=======
+			<h1>Demo For Wednesday</h1>
+			<p>
+				A paragraph of text.
+				<?php
+                	echo "Today is " . date("Y/m/d") . "<br>";
+				?>
+			</p>
+			<button class="say-hi" type="button" data-message="Hello world!!">Hello world</button>
+		</main>
+>>>>>>> aa623b5f9c982fc7ca83e82b3d40a46192055b1a
 		<footer>
 			<!-- This is a footer. --> 
 			<p>&copy; <?php echo date("Y"); ?> Banana Bunch, All Rights Reserved.</p>
