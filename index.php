@@ -1,7 +1,16 @@
+<?php
+// Gets the requested page or a default value
+// Prevents malicious scripting by rejecting malformed requests
+$page = $_GET["page"] ?? "home"; // If no path was specified, go to home
+if(!preg_match('/^[\w-]+$/', $page)){
+    http_response_code(400);
+    exit("ERROR: 400 - Bad Request");
+} 
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>CPSC431 Wep App - Phase 1(<?php echo ($page); ?>)</title>
+        <title>CPSC431 Wep App - Phase 2(<?php echo ($page); ?>)</title>
 		<style>
 			<?php include("css/app.css"); ?>
 		</style>
@@ -10,24 +19,21 @@
 
 	<body>
 		<header>
+			<!-- This header appears on every page. -->
 			<nav>
-				<!-- this header is on every page. -->
+				<a href="home" title="Home Page">Home Page</a>
+				<a href="products" title="Product Listings">Products</a>
             </nav>
 		</header>
 		<main>
-			<h1>Demo For Wednesday</h1>
-			<p>
-				<?php
-                	echo "Today is " . date("Y/m/d") . "<br>";
-				?>
-			</p>
-			<button id="view_home"+ class="say-hi" type="button" data-message="Hello world!!">No data received</button>
+			<div id="<?php echo ("view_$page") ?>">&nbsp;</div>
 		</main>
 		<footer>
-			<!-- This is a footer. --> 
+			<!-- This footer appears on every page. --> 
 			<p>&copy; <?php echo date("Y"); ?> Banana Bunch, All Rights Reserved.</p>
         </footer>
-		<script>
+		<script type="module" src="_controller/c_<?php echo ("$page"); ?>.js"></script>
+		<!--<script>
 			// AJAX request object
 			const request = new XMLHttpRequest();
 			request.open("GET", "api/test", true);
@@ -56,6 +62,6 @@
 			}
 
 			request.send();
-		</script>
+		</script>-->
     </body>
 </html>

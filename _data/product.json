@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Lucky Coin",
+        "description": "This coin is said to bring good fortune to its owner.",
+        "price": "$14.99"
+    },
+    {
+        "title": "Baseball Bat",
+        "description": "Mildly used wooden baseball bat. Still in good condition.",
+        "price": "$24.99"
+    },
+    {
+        "title": "Beef Jerkey",
+        "description": "Delicious bag of dried and salted meat. Makes for a tasty snack.",
+        "price": "$3.99"
+    }
+]
