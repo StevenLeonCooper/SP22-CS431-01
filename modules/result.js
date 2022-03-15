@@ -1,7 +1,7 @@
 export class Result {
 	constructor(data) {
 		if (data instanceof Result) return data;
-		this.staus = data.status ?? "UNKNOWN";
+		this.status = data.status ?? "UNKNOWN";
 		if (Array.isArray(data)) {
 			this.items = data.items;
 		} else {
@@ -27,7 +27,7 @@ export class ItemList extends Result {
 	}
 
 	convertList(type) {
-		if (!type) return false;  // maybe if type is null, don't do anything
+		if (!type) return false;  // If type is null, don't do anything
 		this.items.forEach((item, i) => {
 			this.items[i] = new type(item);
 		});

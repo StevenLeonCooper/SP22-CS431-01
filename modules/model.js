@@ -1,11 +1,10 @@
-import { Result } from "./result";
+import { Result } from "./result.js";
 
 // The base class for models. Its main goal is getting/posting data to and from the API.
 export class Model {
 
     constructor(name) {
-        // The main purpose of this line is to allow VScode to know for sure that the returned
-        // object is a Model, which allows it to give Intellisense tooltips.
+        // This line allows lets VScode know for sure that the returned object is a Model, which allows it to give Intellisense tooltips.
         if (name instanceof Model) return name;
 
         this.name = name;
@@ -13,14 +12,23 @@ export class Model {
         this.dataUrl = `_data/${name}.json`; // Links to dummy test data until PHP API is finished.
     }
 
-    // This function gets called on startup by the controller module 
-    // in order to populate the data field.
+    // This function gets called on startup by the controller module in order to populate the data field.
     async setup() {
         await this.get(this.dataUrl);
     }
 
+    // This function performs a deep copy of an object.
+    _clone(data) {
+        try {
+            return JSON.parse(JSON.stringify(data));
+        } catch (error) {
+            return { error: error };
+        }
+    }
+
     // This function returns the data of the model in the form of a Result object.
     export(type) {
+        // If type is not null, create a new object of this type. Else, perform a deep copy of the object.
         let output = type ? new type(this.data) : this._clone(this.data);
         return new Result(output);
     }

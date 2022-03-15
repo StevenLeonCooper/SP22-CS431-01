@@ -19,6 +19,7 @@ export class ProductList extends ItemList {
 
         super(data);
         this.items = this.items ?? [];
+        console.log(`products: ${this.items}`);
 
         this.convertList(Product);
     }
