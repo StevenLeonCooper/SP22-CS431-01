@@ -13,7 +13,7 @@ export class View {
 
     //Downloads the HTML.
     async setup() {
-        // This line actually makes the HTTP request to the API.
+        // This line actually makes the HTTP request for the HTML file.
         let request = await fetch(this.url);
         let template = await request.text();
         this.template = template;
