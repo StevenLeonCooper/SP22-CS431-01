@@ -1,4 +1,6 @@
-// The base class for modules. Its main goal is getting/posting data to and from the API.
+import { Result } from "./result";
+
+// The base class for models. Its main goal is getting/posting data to and from the API.
 export class Model {
 
     constructor(name) {
@@ -8,13 +10,19 @@ export class Model {
 
         this.name = name;
         this.data = null;
-        this.dataUrl = `_data/${name}.json`;
+        this.dataUrl = `_data/${name}.json`; // Links to dummy test data until PHP API is finished.
     }
 
     // This function gets called on startup by the controller module 
     // in order to populate the data field.
     async setup() {
         await this.get(this.dataUrl);
+    }
+
+    // This function returns the data of the model in the form of a Result object.
+    export(type) {
+        let output = type ? new type(this.data) : this._clone(this.data);
+        return new Result(output);
     }
 
     // Makes a get request to the API for data at the specified url.
