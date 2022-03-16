@@ -1,7 +1,7 @@
 import {Model, View, Controller} from '../modules/controller.js';
-import {ProductList} from '../_model/product.js';
+import {Product} from '../_model/product.js';
 
-const productModel = new Model("product");
+const productModel = new Model(Product);
 const productView = new View("product");
 const productController = new Controller(productView, productModel);
 
@@ -9,15 +9,13 @@ const productController = new Controller(productView, productModel);
 (async () => {
     await productController.setup();
 
-    // Get products from the model.
-    let data = productModel.export();
-    let products = new ProductList(data);
+    let productList = productController.model.list;
 
     // Display products in the view.
-    console.log(products.status);
-    //if(products.status.includes("OK")) {
-        productView.render(products);
-    //}
+    console.log(productList);
+    if(productList.status.includes("OK")) {
+        productView.render(productList.items);
+    }
 
     //TODO: Add event listeners here for inspecting items, making a purchase, etc.
 

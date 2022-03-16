@@ -1,4 +1,4 @@
-[
+{"items": [
     {
         "title": "Lucky Coin",
         "description": "This coin is said to bring good fortune to its owner.",
@@ -14,4 +14,4 @@
         "description": "Delicious bag of dried and salted meat. Makes for a tasty snack.",
         "price": "$3.99"
     }
-]
+], "status":"OK"}

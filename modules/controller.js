@@ -13,6 +13,6 @@ export class Controller {
 
 	async setup() {
 		await this.view.setup();
-		await this.model.setup();
+		await this.model.importData();
 	}
 }
