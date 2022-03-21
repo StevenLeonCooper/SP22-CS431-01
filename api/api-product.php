@@ -18,8 +18,8 @@ if (!function_exists($method)) {
 require("helpers/mysql_setup.php");
 
 
-$db = new Connection();
-
+$conn = new Connection();
+$db = $conn->PDO();
 
 $method($_REQUEST, $db);
 
@@ -31,13 +31,19 @@ function Respond($output)
 }
 
 
-function GET($req, $db)
+function GET($req, PDO $db)
 {
-    $query = "CALL get_all_products";
+    $singleQuery = "call get_product(?)";
+    $listQuery = "call get_all_products(?)";
+    $query = isset($req['id']) ? $singleQuery : $listQuery;
+    $param = isset($req['id']) ? $req['id'] : ($req['sort_by'] ?? "title-asc");
 
-    $result = $db->mysqli->query($query);
+    $statement = $db->prepare($query);
+    
+    $statement->execute([$param]);
 
-    $output = $result->fetch_all(MYSQLI_ASSOC);
+    $output = $statement->fetchAll();
+
 
     Respond($output);
 }
