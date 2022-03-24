@@ -14,7 +14,7 @@ const productController = new Controller(productView, productModel);
     // Display products in the view.
     console.log(productList);
     if(productList.status.includes("OK")) {
-        productView.render(productList.items);
+        productView.render(productList);
     }
 
     //TODO: Add event listeners here for inspecting items, making a purchase, etc.
