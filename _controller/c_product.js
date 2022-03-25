@@ -18,7 +18,10 @@ const productController = new Controller(productView, productModel);
     }
 
     //TODO: Add event listeners here for inspecting items, making a purchase, etc.
-
+    document.getElementById("AddProductButton").addEventListener("click", () => {
+        document.getElementById("AddProductForm").classList.toggle("hidden");
+    })
+   
     document.getElementById("APF").addEventListener("submit", async (e) => {
         e.preventDefault()
 
@@ -41,7 +44,11 @@ const productController = new Controller(productView, productModel);
 			console.log(productId);
 
 			//Fill in the correct info
+<<<<<<< HEAD
 			// dpi.querySelector("#dpi-title").innerText = ;
+=======
+			//dpi.querySelector("#dpi-title").innerText = ;
+>>>>>>> 89b0f8aba9a31a8ad5c0e5be42c7e99a1198023c
 
 			//Make the pop-up visible, change back to none to hide
 			dpi.style.display = "block"; 
