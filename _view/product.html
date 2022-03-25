@@ -1,9 +1,9 @@
 <h1>Products Page</h1>
 <hr>
-<button type="button" data-action="toggleElement" data-for="#AddProductForm">
+<button id="AddProductButton" type="button" data-action="toggleElement" data-for="#AddProductForm">
     Add Product
 </button>
-<div id="AddProductForm" class="detail-form">
+<div id="AddProductForm" class="detail-form hidden">
     <form id="APF" data-action="addNewProduct" data-ajax="true">
         <input type="hidden" id="id" value="null">
         <label for="title">Title:<input type="text" name="title" id="title" maxlength="100" size="30"></label>
