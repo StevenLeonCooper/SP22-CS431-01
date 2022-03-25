@@ -28,7 +28,7 @@ const productController = new Controller(productView, productModel);
         let request = await productModel.post(newProduct);
     
         if(request.status.includes("OK")){
-            alert("It Worked!");
+            productModel.add(newProduct);
             productView.render(productModel.data);
         }
     });
