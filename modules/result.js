@@ -1,7 +1,7 @@
 // Represents a generic result received from the API.
 export class Result {
-	constructor(data) {
-		this.status = "UNKNOWN";
+	constructor(data, statusText = "UNKNOWN") {
+		this.status = statusText;
 		Object.assign(this, data);  // Copies all properties from data over to this.
 	}
 }

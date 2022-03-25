@@ -2,7 +2,7 @@ import { Item, ItemList, Result } from "./result.js";
 
 const Settings = {
     apiUrl: function(apiName){
-        return `_data/${apiName}.json`; // Links to dummy test data until PHP API is finished.
+        return `api/${apiName}`;
     }
 };
 
@@ -40,7 +40,7 @@ export class Model {
         url = url ?? this.dataUrl;
         let response = await fetch(url);
         let jsonData = await response.json();
-        return new Result(jsonData);
+        return new Result(jsonData, response.statusText);
     }
 
     // Make a post request to the API to update data at the specified url.
