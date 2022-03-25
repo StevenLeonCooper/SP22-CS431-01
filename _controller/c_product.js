@@ -37,8 +37,14 @@ const productController = new Controller(productView, productModel);
 		// console.log(card);
 		card.addEventListener("click", async (e) => {
 			let dpi = document.getElementById("DetailedProductInfo");
-			console.log(dpi);
-			dpi.style.display = "block";
+			let productId = card.dataset.product-id;
+			console.log(productList);
+
+			//Fill in the correct info
+			dpi.querySelector("#dpi-title").innerText = ;
+
+			//Make the pop-up visible, change back to none to hide
+			dpi.style.display = "block"; 
 		});
 	});
 

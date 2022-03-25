@@ -18,7 +18,7 @@
 <section class="body-content">
     <div id="ProductInfo">
         {{#items}}
-        <div class="product-card">
+        <div class="product-card" data-product-id="{{id}}">
             <strong>{{title}}</strong>
             <strong>${{price}}</strong>
             <img src="{{image_url}}" alt="{{title}}" data-action="viewProduct" data-product-id="{{id}}">
@@ -29,9 +29,9 @@
 	<div id="DetailedProductInfo" style="display:none">
 		<strong id="dpi-title">product title goes here</strong><br>
 		<strong>$<span id="dpi-price">price goes here</span></strong><br>
-		<img src="https://upload.wikimedia.org/wikipedia/commons/4/42/Kittens%21%21.jpg" alt="Buncha Kittens"><br>
-		<p>
-		It's small cats.
+		<img id="dpi-image" src="product image url goes here" alt="product title goes here"><br>
+		<p id="dpi-description">
+			Product description goes here.
 		</p>
 		<p>
 		<button class="delete-button" type="button" data-action="deleteProduct" data-id="2a731a6e-9a92-11ec-8e94-56000233e9ec">
