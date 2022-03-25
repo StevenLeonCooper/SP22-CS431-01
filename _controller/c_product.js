@@ -40,15 +40,12 @@ const productController = new Controller(productView, productModel);
 		// console.log(card);
 		card.addEventListener("click", async (e) => {
 			let dpi = document.getElementById("DetailedProductInfo");
-			let productId = card.dataset.product-id;
-			console.log(productId);
+			let productId = card.dataset.productId;
+			let product = productModel.get("product/?id=" + productId); //this is broken, need to find how to get product
+			console.log(product);
 
 			//Fill in the correct info
-<<<<<<< HEAD
-			// dpi.querySelector("#dpi-title").innerText = ;
-=======
 			//dpi.querySelector("#dpi-title").innerText = ;
->>>>>>> 89b0f8aba9a31a8ad5c0e5be42c7e99a1198023c
 
 			//Make the pop-up visible, change back to none to hide
 			dpi.style.display = "block"; 
