@@ -18,7 +18,7 @@ export class Model {
         this.data = null;
         this.dataUrl = Settings.apiUrl(item.apiName); 
         this.itemType = itemType;
-        this.items = new ItemList();
+        //this.items = new ItemList();
     }
 
     get list() {
@@ -51,6 +51,10 @@ export class Model {
     _dataString(data) {
         let jsonData = JSON.stringify(data); // convert data to JSON
         return this._encode({ json: jsonData });
+    }
+
+    add(newItem) {
+        this.data.items?.push(newItem);
     }
 
     // Make a post request to the API to update data at the specified url.
