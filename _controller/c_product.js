@@ -17,38 +17,22 @@ const productController = new Controller(productView, productModel);
         productView.render(productList);
     }
 
-    //TODO: Add event listeners here for inspecting items, making a purchase, etc.
-    document.getElementById("AddProductButton").addEventListener("click", () => {
-        document.getElementById("AddProductForm").classList.toggle("hidden");
-    })
-   
-    document.getElementById("APF").addEventListener("submit", async (e) => {
-        e.preventDefault()
-
-        let form_data = productController.formData(e.currentTarget);
-        let newProduct = new Product(form_data);
-
-        let request = await productModel.post(newProduct);
-    
-        if(request.status.includes("OK")){
-            productModel.add(newProduct);
-            productView.render(productModel.data);
-        }
-    });
-
     let closeModal = function(e){ 
         let wrapper = document.getElementById("modal-wrapper");
         wrapper.remove();
     }
 
-	Array.from(document.querySelectorAll(".product-card")).forEach((card) => {
-		// console.log(card);
-		card.addEventListener("click", async (e) => {
-			
+    //TODO: Add event listeners here for inspecting items, making a purchase, etc.
+    document.addEventListener("click", async (e) => {
+        if(e.target.id == "AddProductButton") {
+            document.getElementById("AddProductForm").classList.toggle("hidden");
+        }
+        if(e.target.dataset.action == "viewProduct") {
+            			
             let partial = new PartialView("product-modal");
             await partial.setup();
 
-			let productId = card.dataset.productId;
+			let productId = e.target.dataset.productId;
 			let result = await productModel.get("api/product/?id=" + productId); 
 			
             let product = new Product(result.items[0]);
@@ -58,8 +42,24 @@ const productController = new Controller(productView, productModel);
             partial.renderModal(product);
 
             document.getElementById("closeModal").addEventListener("click", closeModal);
-		});
-	});
+        }
+    })
 
+    document.addEventListener("submit", async (e) => {
+
+        if(e.target.dataset.action == "addNewProduct") {
+            e.preventDefault()
+
+            let form_data = productController.formData(e.currentTarget);
+            let newProduct = new Product(form_data);
+
+            let request = await productModel.post(newProduct);
+        
+            if(request.status.includes("OK")){
+                productModel.add(newProduct);
+                productView.render(productModel.data);
+            }
+        }
+    })
 
 })();
