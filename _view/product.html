@@ -1,5 +1,20 @@
 <h1>Products Page</h1>
 <hr>
+<button type="button" data-action="toggleElement" data-for="#AddProductForm">
+    Add Product
+</button>
+<div id="AddProductForm" class="detail-form">
+    <form id="APF" data-action="addNewProduct" data-ajax="true">
+        <input type="hidden" id="id" value="null">
+        <label for="title">Title:<input type="text" name="title" id="title" maxlength="100" size="30"></label>
+        <label for="price">Price:<input type="text" name="price" id="price" maxlength="100" size="30"></label>
+        <label for="description">Desc.:<input type="text" name="description" id="description" maxlength="100" size="30"></label>
+        <label for="APF_img">Image URL:<input type="text" name="image_url" id="image_url" maxlength="100" size="30"></label>
+        <label for="APF_stock">Stock:<input type="text" name="stock" id="stock" maxlength="100" size="30"></label>
+        <hr>
+        <button type="submit">Submit</button>
+    </form>
+</div>
 <section class="body-content">
     <div id="ProductInfo">
         {{#items}}

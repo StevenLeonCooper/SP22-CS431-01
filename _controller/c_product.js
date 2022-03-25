@@ -19,4 +19,18 @@ const productController = new Controller(productView, productModel);
 
     //TODO: Add event listeners here for inspecting items, making a purchase, etc.
 
+    document.getElementById("APF").addEventListener("submit", async (e) => {
+        e.preventDefault()
+
+        let form_data = productController.formData(e.currentTarget);
+        let newProduct = new Product(form_data);
+
+        let request = await productModel.post(newProduct);
+    
+        if(request.status.includes("OK")){
+            alert("It Worked!");
+            productView.render(productModel.data);
+        }
+    })
+    
 })();

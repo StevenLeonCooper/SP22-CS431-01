@@ -40,11 +40,30 @@ export class Model {
         url = url ?? this.dataUrl;
         let response = await fetch(url);
         let jsonData = await response.json();
-        return new Result(jsonData, response.statusText);
+        return new Result(jsonData);
+    }
+
+    _encode(data) {
+        if (!data) return "";
+        return Object.keys(data).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k])).join('&');
+    }
+
+    _dataString(data) {
+        let jsonData = JSON.stringify(data); // convert data to JSON
+        return this._encode({ json: jsonData });
     }
 
     // Make a post request to the API to update data at the specified url.
-    async post(url) {
-        //TODO
+    async post(data) {
+        let bodytext = this._dataString(data)
+        
+        let response = await fetch(this.dataUrl, {
+            method: "POST",
+            headers: { "content-Type": "application/x-www-form-urlencoded" },
+            body: bodytext
+        });
+
+        let jsonData = await response.json();
+        return new Result(jsonData);
     }
 }
