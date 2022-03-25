@@ -38,10 +38,10 @@ const productController = new Controller(productView, productModel);
 		card.addEventListener("click", async (e) => {
 			let dpi = document.getElementById("DetailedProductInfo");
 			let productId = card.dataset.product-id;
-			console.log(productList);
+			console.log(productId);
 
 			//Fill in the correct info
-			dpi.querySelector("#dpi-title").innerText = ;
+			// dpi.querySelector("#dpi-title").innerText = ;
 
 			//Make the pop-up visible, change back to none to hide
 			dpi.style.display = "block"; 

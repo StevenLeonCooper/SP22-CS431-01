@@ -6,7 +6,7 @@
     color: #FFF;
 }
 
-.product-card, #DetailedProductInfo {
+.product-card {
     width: 180px;
     background-color: #777;
     border-radius: 6px;
@@ -14,12 +14,12 @@
     color: #FFF;
 }
 
-.product-card strong, #DetailedProductInfo strong {
+.product-card strong {
     display: block;
     text-align: center;
 }
 
-.product-card img, #DetailedProductInfo img {
+.product-card img {
     cursor: pointer;
     max-width: 180px;
     max-height: 180px;
