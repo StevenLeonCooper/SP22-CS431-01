@@ -31,6 +31,16 @@ const productController = new Controller(productView, productModel);
             alert("It Worked!");
             productView.render(productModel.data);
         }
-    })
-    
+    });
+
+	Array.from(document.querySelectorAll(".product-card")).forEach((card) => {
+		// console.log(card);
+		card.addEventListener("click", async (e) => {
+			let dpi = document.getElementById("DetailedProductInfo");
+			console.log(dpi);
+			dpi.style.display = "block";
+		});
+	});
+
+
 })();
