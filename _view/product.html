@@ -25,33 +25,5 @@
         </div>
         {{/items}}
     </div>
-
-	<div id="DetailedProductInfo" style="display:none">
-		<strong id="dpi-title">product title goes here</strong><br>
-		<strong>$<span id="dpi-price">price goes here</span></strong><br>
-		<img id="dpi-image" src="product image url goes here" alt="product title goes here"><br>
-		<p id="dpi-description">
-			Product description goes here.
-		</p>
-		<p>
-		<button class="delete-button" type="button" data-action="deleteProduct" data-id="2a731a6e-9a92-11ec-8e94-56000233e9ec">
-			DELETE THIS PRODUCT FOREVER!
-		</button>
-		</p>
-		<hr>
-		<button type="button" data-action="toggleElement" data-for="#UpdateProductForm">Update Product</button>
-		<div id="UpdateProductForm" class="hidden detail-form">
-			<form id="UPF" data-action="updateProduct" data-ajax="true">
-				<input type="hidden" id="id" value="2a731a6e-9a92-11ec-8e94-56000233e9ec">
-				<label>Title:<input type="text" id="title" maxlength="100" size="30" value="Buncha Kittens"></label>
-				<label>Price:<input type="text" id="price" maxlength="100" size="30" value="520.00"></label>
-				<label>Desc.:<input type="text" id="description" maxlength="100" size="30" value="It's small cats."></label>
-				<label>Image URL:<input type="text" id="image_url" maxlength="100" size="30" value="https://upload.wikimedia.org/wikipedia/commons/4/42/Kittens%21%21.jpg"></label>
-				<label>Stock:<input type="text" id="limit" maxlength="100" size="30" value="23"></label>
-				<hr>
-				<button type="submit">Submit</button>
-			</form>
-		</div>
-	</div>
 </section>
 

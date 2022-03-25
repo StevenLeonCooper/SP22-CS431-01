@@ -1,4 +1,4 @@
-import {Model, View, Controller} from '../modules/controller.js';
+import {Model, View, PartialView, Controller} from '../modules/controller.js';
 import {Product} from '../_model/product.js';
 
 const productModel = new Model(Product);
@@ -36,19 +36,28 @@ const productController = new Controller(productView, productModel);
         }
     });
 
+    let closeModal = function(e){ 
+        let wrapper = document.getElementById("modal-wrapper");
+        wrapper.remove();
+    }
+
 	Array.from(document.querySelectorAll(".product-card")).forEach((card) => {
 		// console.log(card);
 		card.addEventListener("click", async (e) => {
-			let dpi = document.getElementById("DetailedProductInfo");
+			
+            let partial = new PartialView("product-modal");
+            await partial.setup();
+
 			let productId = card.dataset.productId;
-			let product = productModel.get("product/?id=" + productId); //this is broken, need to find how to get product
-			console.log(product);
+			let result = await productModel.get("api/product/?id=" + productId); 
+			
+            let product = new Product(result.items[0]);
 
-			//Fill in the correct info
-			//dpi.querySelector("#dpi-title").innerText = ;
+            console.log(product);
+            
+            partial.renderModal(product);
 
-			//Make the pop-up visible, change back to none to hide
-			dpi.style.display = "block"; 
+            document.getElementById("closeModal").addEventListener("click", closeModal);
 		});
 	});
 

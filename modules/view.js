@@ -2,13 +2,13 @@ import mustache from './mustache.js';
 
 export class View {
 
-    constructor(name) {
+    constructor(name, settings) {
         if(name instanceof View) return name;
 
         this.name = name;
-        this.url = `_view/${this.name}.html` // URL where we send a request for the HTML.
+        this.url = settings ? settings.url : `_view/${this.name}.html` // URL where we send a request for the HTML.
         this.template = ""; // This will hold the actual HTML once we load it in setup().
-        this.selector = `#view_${name}`; // Where we should place the view on the page.
+        this.selector = settings ? settings.selector : `#view_${name}`; // Where we should place the view on the page.
     }
 
     // Downloads the HTML.
@@ -27,5 +27,21 @@ export class View {
     render(modelData){
         let html = mustache.render(this.template, modelData);
         document.querySelector(this.selector).innerHTML = html;
+    }
+
+    // Renders a modal popup on the page.
+    renderModal(data) {
+        let html = mustache.render(this.template, data);
+        document.body.insertAdjacentHTML("beforeend", html);
+    }
+}
+
+export class PartialView extends View {
+    constructor(name, settings) {
+        super(name, {
+            url: `_view/_partial/${name}.html`,
+            selector: `#partial_${name}`
+        });
+        Object.assign(this, settings);
     }
 }

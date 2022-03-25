@@ -1,8 +1,8 @@
 import {Model} from './model.js';
-import {View} from './view.js';
+import {View, PartialView} from './view.js';
 
 // Exporting here allows us to reference model and view in individual controllers.
-export {Model, View};
+export {Model, View, PartialView};
 
 // Base class for controllers. By itself, it does not do much.
 export class Controller {
