@@ -1,17 +1,23 @@
 {"items": [
     {
+        "id": 0,
         "title": "Lucky Coin",
         "description": "This coin is said to bring good fortune to its owner.",
-        "price": "$14.99"
+        "price": "$14.99",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/80/5-Cent-Belgium-1856-Front.jpg"
     },
     {
+        "id": 1,
         "title": "Baseball Bat",
         "description": "Mildly used wooden baseball bat. Still in good condition.",
-        "price": "$24.99"
+        "price": "$24.99",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Brett_Lawrie_bat_broken_by_Mariano_Rivera_cutter_at_Baseball_Hall_of_Fame.jpg"
     },
     {
+        "id": 2,
         "title": "Beef Jerkey",
         "description": "Delicious bag of dried and salted meat. Makes for a tasty snack.",
-        "price": "$3.99"
+        "price": "$3.99",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/24/US-IN_-_Saint_James_-_Beef_%284892090728%29.jpg"
     }
 ], "status":"OK"}

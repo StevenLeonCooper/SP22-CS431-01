@@ -1,20 +1,13 @@
 <h1>Products Page</h1>
 <hr>
-<table>
-    <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Product Description</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
+<section class="body-content">
+    <div id="ProductInfo">
         {{#items}}
-        <tr>
-            <td>{{title}}</td>
-            <td>{{description}}</td>
-            <td>{{price}}</td>
-        </tr>
+        <div class="product-card">
+            <strong>{{title}}</strong>
+            <strong>{{price}}</strong>
+            <img src="{{image_url}}" alt="{{title}}" data-action="viewProduct" data-product-id="{{id}}">
+        </div>
         {{/items}}
-    </tbody>
-</table>
+    </div>
+</section>

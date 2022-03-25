@@ -8,6 +8,7 @@ export class Product extends Item {
         this.title = null;
         this.description = null;
         this.price = 0.00;
+        this.image_url = null;
 
         Object.assign(this, data);
     }
