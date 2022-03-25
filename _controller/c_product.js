@@ -53,9 +53,10 @@ const productController = new Controller(productView, productModel);
             let form_data = productController.formData(e.currentTarget);
             let newProduct = new Product(form_data);
 
-            let request = await productModel.post(newProduct);
+            let result = await productModel.post(newProduct);
+            newProduct = new Product(result.items[0]);
         
-            if(request.status.includes("OK")){
+            if(result.status.includes("OK")){
                 productModel.add(newProduct);
                 productView.render(productModel.data);
             }
