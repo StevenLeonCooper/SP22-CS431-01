@@ -54,15 +54,37 @@ export class Model {
     }
 
     add(newItem) {
-        this.data.items?.push(newItem);
+        let dataList = new ItemList(this.data, this.itemType);
+        dataList.add(newItem);
+        this.data = dataList;
     }
 
-    // Make a post request to the API to update data at the specified url.
+    update(changedItem) {
+        let dataList = new ItemList(this.data, this.itemType);
+        dataList.replace("id", changedItem.id, changedItem);
+        this.data = dataList;
+    }
+
+    // Make a post request to the API to create data at the specified url.
     async post(data) {
         let bodytext = this._dataString(data)
         
         let response = await fetch(this.dataUrl, {
             method: "POST",
+            headers: { "content-Type": "application/x-www-form-urlencoded" },
+            body: bodytext
+        });
+
+        let jsonData = await response.json();
+        return new Result(jsonData);
+    }
+
+    // Make a put request to the API to create data at the specified url.
+    async put(data) {
+        let bodytext = this._dataString(data)
+        
+        let response = await fetch(this.dataUrl, {
+            method: "PUT",
             headers: { "content-Type": "application/x-www-form-urlencoded" },
             body: bodytext
         });

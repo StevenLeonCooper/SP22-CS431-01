@@ -43,12 +43,15 @@ const productController = new Controller(productView, productModel);
 
             document.getElementById("closeModal").addEventListener("click", closeModal);
         }
+        if(e.target.id == "UpdateProductButton") {
+            document.getElementById("UpdateProductForm").classList.toggle("hidden");
+        }
     })
 
     document.addEventListener("submit", async (e) => {
 
+        e.preventDefault()
         if(e.target.dataset.action == "addNewProduct") {
-            e.preventDefault()
 
             let form_data = productController.formData(e.currentTarget);
             let newProduct = new Product(form_data);
@@ -60,6 +63,20 @@ const productController = new Controller(productView, productModel);
                 productModel.add(newProduct);
                 productView.render(productModel.data);
             }
+        }
+        if(e.target.dataset.action == "updateProduct") {
+
+            let form_data = productController.formData(e.currentTarget);
+            let changedProduct = new Product(form_data);
+
+            let result = await productModel.put(changedProduct);
+            changedProduct = new Product(result);
+        
+            if(result.status.includes("OK")){
+                closeModal();
+                productModel.update(changedProduct);
+                productView.render(productModel.data);
+            }           
         }
     })
 

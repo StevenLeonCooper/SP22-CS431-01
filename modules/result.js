@@ -25,6 +25,26 @@ export class ItemList extends Result {
 		this.convertList(type);
 	}
 
+	add(item){
+        this.items.push(new this.itemType(item));
+    }
+
+    remove(key, value){
+        let filteredList = this.items.filter(item => {
+            if (item[key] == value) return false;
+        });
+
+        this.items = filteredList;
+    }
+
+    replace(key, value, newItem){
+        this.items.forEach((item, index)=>{
+            if(item[key] == value){
+                this.items[index] = newItem;
+            }
+        });
+    }
+
 	// Convert all the items in a list into objects of a particular type.
 	convertList(type) {
 		if (!type) return false;  // If type is null, don't do anything
