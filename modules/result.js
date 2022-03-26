@@ -22,6 +22,7 @@ export class ItemList extends Result {
 		if (data instanceof ItemList) return data;
 		super(data);
 		this.items = data?.items ?? [data ?? {}];
+		this.itemType = type;
 		this.convertList(type);
 	}
 
@@ -29,11 +30,8 @@ export class ItemList extends Result {
         this.items.push(new this.itemType(item));
     }
 
-    remove(key, value){
-        let filteredList = this.items.filter(item => {
-            if (item[key] == value) return false;
-        });
-
+	remove(key, value){
+        let filteredList = this.items.filter(item => item[key] != value);
         this.items = filteredList;
     }
 

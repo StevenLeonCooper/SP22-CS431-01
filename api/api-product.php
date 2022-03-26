@@ -138,16 +138,23 @@ function PUT($req, PDO $db, $response)
 function DELETE($req, PDO $db, $response)
 {
     try {
-        $recordId = $req['id'];
+        $param = $req['id'];
+
         $statement = $db->prepare("CALL delete_product(?)");
-        $statement ->execute($recordId);
+
+        $statement->execute([$param]);
+
         $result = $statement->fetchAll();
-        $response->outputJSON($result);
+
+        $response->status = "OK";
+
+    } catch (Exception $error) {
+        $msg = $error->getMessage();
+
+        $result = ["error" => $error->getMessage()];
+
+        $response->status = "FAIL: $msg";
     }
 
-    catch (Exception $error) {
-        $msg = $error->getMessage();
-        $output = array("status" => $msg);
-        $response->outputJSON($output);
-    }
+    $response->outputJSON();
 }

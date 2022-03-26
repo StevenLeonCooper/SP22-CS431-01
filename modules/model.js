@@ -65,6 +65,12 @@ export class Model {
         this.data = dataList;
     }
 
+    remove(id) {
+        let dataList = new ItemList(this.data, this.itemType);
+        dataList.remove("id", id);
+        this.data = dataList;     
+    }
+
     // Make a post request to the API to create data at the specified url.
     async post(data) {
         let bodytext = this._dataString(data)
@@ -91,5 +97,12 @@ export class Model {
 
         let jsonData = await response.json();
         return new Result(jsonData);
+    }
+
+    async delete(id) {
+        
+        let response = await fetch(this.dataUrl + `/?id=${id}`, {
+            method: "DELETE"
+        })
     }
 }

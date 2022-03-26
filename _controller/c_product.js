@@ -46,6 +46,14 @@ const productController = new Controller(productView, productModel);
         if(e.target.id == "UpdateProductButton") {
             document.getElementById("UpdateProductForm").classList.toggle("hidden");
         }
+        if(e.target.dataset.action == "deleteProduct") {
+            let id = e.target.dataset.id;
+            let result = await productModel.delete(id);
+
+            closeModal();
+            productModel.remove(id);
+            productView.render(productModel.data);
+        }
     })
 
     document.addEventListener("submit", async (e) => {
