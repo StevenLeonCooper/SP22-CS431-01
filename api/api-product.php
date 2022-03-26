@@ -18,6 +18,8 @@ if (!function_exists($method)) {
 require("helpers/mysql_setup.php");
 require("helpers/server.php");
 
+$put = [];
+parse_str(file_get_contents("php://input"), $put);
 
 $conn = new Connection();
 $db = $conn->PDO();
@@ -52,7 +54,7 @@ function GET($req, PDO $db, $response)
     $response->outputJSON($result);
 }
 
-function POST($req, PDO $db, $response)
+function POST($req, PDO $db, $response, $put)
 {
 
     try {
@@ -89,5 +91,47 @@ function POST($req, PDO $db, $response)
     }
 
     $response->outputJSON($result);
+}
+
+function PUT($req, PDO $db, $response)
+{
+    $put = [];
+    parse_str(file_get_contents("php://input"), $put);
+    try {
+        $putJson = $put['json'] ?? false;
+
+        if($putJson){
+            $put = json_decode($putJson, true);
+            // keep the 'json' property for backwards compatability
+            $put['json'] = $putJson;
+        }
+        
+
+        $params = array(
+            ':id' => $put['id'],
+            ':title' => $put['title'],
+            ':desc'  => $put['description'],
+            ':image' => $put['image_url'],
+            ':price' => $put['price'],
+            ':stock'   => $put['stock']
+        );
+
+        $statement = $db->prepare('CALL update_product(:id,:title,:desc,:image,:price,:stock)');
+
+        $statement->execute($params);
+
+        $result = $statement->fetchAll();
+
+        $response->status = "OK";
+
+    }   catch (Exception $error) {
+        $msg = $error->getMessage();
+
+        $result = ["error" => $error->getMessage()];
+
+        $response->status = "FAIL: $msg";
+    }
+
+        $response->outputJSON($result);
 }
 
