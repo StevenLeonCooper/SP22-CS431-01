@@ -21,70 +21,73 @@ require("helpers/server.php");
 
 $conn = new Connection();
 $db = $conn->PDO();
+$response = new Response();
 
-$method($_REQUEST, $db);
+$method($_REQUEST, $db, $response);
 
 
-function Respond($output)
+function GET($req, PDO $db, $response)
 {
-    $output->checkEmpty();
-    Header("Content-Type: application/json; charset=utf-8");
-    exit(json_encode($output));
-}
+    try {
+        $singleQuery = "call get_product(?)";
+        $listQuery = "call get_all_products(?)";
+        $query = isset($req['id']) ? $singleQuery : $listQuery;
+        $param = isset($req['id']) ? $req['id'] : ($req['sort_by'] ?? "title-asc");
 
+        $statement = $db->prepare($query);
+        
+        $statement->execute([$param]);
+        
+        $result = $statement->fetchAll();
 
-function GET($req, PDO $db)
-{
-    $singleQuery = "call get_product(?)";
-    $listQuery = "call get_all_products(?)";
-    $query = isset($req['id']) ? $singleQuery : $listQuery;
-    $param = isset($req['id']) ? $req['id'] : ($req['sort_by'] ?? "title-asc");
+        $response->status = "OK";
+    } catch (Exception $error) {
+        $msg = $error->getMessage();
 
-    $statement = $db->prepare($query);
-    
-    $statement->execute([$param]);
+        $result = ["error" => $error->getMessage()];
 
-    $data = $statement->fetchAll();
-
-    $output = new Response();
-
-    $output->data($data);
-
-    //$output = new ServerResponse($req, $data);
-
-    Respond($output);
-}
-
-function POST($req, PDO $db)
-{
-
-    $postJson = $_POST['json'] ?? false;
-
-    if($postJson){
-        $_POST = json_decode($postJson, true);
-        // keep the 'json' property for backwards compatability
-        $_POST['json'] = $postJson;
+        $this->$response->status = "FAIL: $msg";
     }
-    
 
-    $params = array(
-        ':title' => $_POST['title'],
-        ':desc'  => $_POST['description'],
-        ':image' => $_POST['image_url'],
-        ':price' => $_POST['price'],
-        ':stock'   => $_POST['stock']
-    );
+    $response->outputJSON($result);
+}
 
-    $statement = $db->prepare('CALL post_product(:title,:desc,:image,:price,:stock)');
+function POST($req, PDO $db, $response)
+{
 
-    $statement->execute($params);
+    try {
+        $postJson = $_POST['json'] ?? false;
 
-    $data = $statement->fetchAll();
+        if($postJson){
+            $_POST = json_decode($postJson, true);
+            // keep the 'json' property for backwards compatability
+            $_POST['json'] = $postJson;
+        }
+        
 
-    $output = new Response();
+        $params = array(
+            ':title' => $_POST['title'],
+            ':desc'  => $_POST['description'],
+            ':image' => $_POST['image_url'],
+            ':price' => $_POST['price'],
+            ':stock'   => $_POST['stock']
+        );
 
-    $output->data($data);
+        $statement = $db->prepare('CALL post_product(:title,:desc,:image,:price,:stock)');
 
-    Respond($output);
+        $statement->execute($params);
+
+        $result = $statement->fetchAll();
+
+        $response->status = "OK";
+    } catch (Exception $error) {
+        $msg = $error->getMessage();
+
+        $result = ["error" => $error->getMessage()];
+
+        $response->status = "FAIL: $msg";
+    }
+
+    $response->outputJSON($result);
 }
 

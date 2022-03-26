@@ -35,7 +35,7 @@ const productController = new Controller(productView, productModel);
 			let productId = e.target.dataset.productId;
 			let result = await productModel.get("api/product/?id=" + productId); 
 			
-            let product = new Product(result.items[0]);
+            let product = new Product(result);
 
             console.log(product);
             
@@ -54,7 +54,7 @@ const productController = new Controller(productView, productModel);
             let newProduct = new Product(form_data);
 
             let result = await productModel.post(newProduct);
-            newProduct = new Product(result.items[0]);
+            newProduct = new Product(result);
         
             if(result.status.includes("OK")){
                 productModel.add(newProduct);
