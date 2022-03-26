@@ -54,7 +54,7 @@ function GET($req, PDO $db, $response)
     $response->outputJSON($result);
 }
 
-function POST($req, PDO $db, $response, $put)
+function POST($req, PDO $db, $response)
 {
 
     try {
@@ -135,3 +135,19 @@ function PUT($req, PDO $db, $response)
         $response->outputJSON($result);
 }
 
+function DELETE($req, PDO $db, $response)
+{
+    try {
+        $recordId = $req['id'];
+        $statement = $db->prepare("CALL delete_product(?)");
+        $statement ->execute($recordId);
+        $result = $statement->fetchAll();
+        $response->outputJSON($result);
+    }
+
+    catch (Exception $error) {
+        $msg = $error->getMessage();
+        $output = array("status" => $msg);
+        $response->outputJSON($output);
+    }
+}
