@@ -104,7 +104,6 @@ function PUT($req, PDO $db, $response, $put)
             $put['json'] = $putJson;
         }
         
-
         $params = array(
             ':id' => $put['id'],
             ':title' => $put['title'],
