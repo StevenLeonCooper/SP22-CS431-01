@@ -5,8 +5,11 @@ $page = $_GET["page"] ?? "home"; // If no path was specified, go to home
 if(!preg_match('/^[\w-]+$/', $page)){
     http_response_code(400);
     exit("ERROR: 400 - Bad Request");
-} 
+}
+
+session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
