@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+$user = $_SESSION['user'] ?? ["userid" => false, "visitor" => true];
+$username = $user['username'] ?? "";
+$userJson = json_encode($user);
+
 // Gets the requested page or a default value
 // Prevents malicious scripting by rejecting malformed requests
 $page = $_GET["page"] ?? "home"; // If no path was specified, go to home
@@ -7,12 +13,14 @@ if(!preg_match('/^[\w-]+$/', $page)){
     exit("ERROR: 400 - Bad Request");
 }
 
-session_start();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
+		<script>
+			window.user = <?php echo ($userJson); ?>;
+		</script>
         <title>CPSC431 Wep App - Phase 2(<?php echo ($page); ?>)</title>
 		<style>
 			<?php include("css/app.css"); ?>
@@ -26,6 +34,13 @@ session_start();
 			<nav>
 				<a href="home" title="Home Page">Home Page</a>
 				<a href="product" title="Product Listings">Products</a>
+				<div>
+					<?php if ($user['user_id'] == false) { ?>
+						<a href="login" title="Login or Sign Up">Login or Sign Up</a>
+					<?php } else { ?>
+						<strong> Logged in as <?php echo ($username); ?><a href='login?logout=1'>(Log Out)</a></strong>
+					<?php } ?>
+				</div>
             </nav>
 		</header>
 		<main>
