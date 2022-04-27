@@ -39,11 +39,9 @@ function POST($req, PDO $db, $response) {
             ':email' => $_POST['email'],
             ':first_name' => $_POST['first_name'],
             ':last_name' => $_POST['last_name'],
-            ':picture' => $_POST['picture'],
-            ':role_id' => $_POST['role_id']
         );
 
-        $statement = $db->prepare('CALL create_user(:username,:password,:email,:first_name,:last_name,:picture,:role_id)');
+        $statement = $db->prepare('CALL create_user(:username,:password,:email,:first_name,:last_name)');
 
         $statement->execute($params);
 
