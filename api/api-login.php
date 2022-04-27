@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 ini_set('display_errors', 1);
@@ -16,16 +15,13 @@ if (!function_exists($method)) {
 require("helpers/mysql_setup.php");
 require("helpers/server.php");
 
-$put = [];
-parse_str(file_get_contents("php://input"), $put);
-
 $conn = new Connection();
 $db = $conn->PDO();
 $response = new Response();
 
-$method($_REQUEST, $db, $response, $put);
+$method($_REQUEST, $db, $response);
 
-function POST($req, PDO $db, $response, $put) {
+function POST($req, PDO $db, $response) {
     try {
         $postJson = $_POST['json'] ?? false;
 
@@ -34,11 +30,12 @@ function POST($req, PDO $db, $response, $put) {
             // keep the 'json' property for backwards compatability
             $_POST['json'] = $postJson;
         }
-        
+
+        $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
         $params = array(
             ':username' => $_POST['username'],
-            ':password'  => $_POST['password'],
+            ':password'  => $hashed_password,
             ':email' => $_POST['email'],
             ':first_name' => $_POST['first_name'],
             ':last_name' => $_POST['last_name'],
@@ -65,6 +62,54 @@ function POST($req, PDO $db, $response, $put) {
     $response->outputJSON($result);
 }
 
-function PUT($req, PDO $db, $response, $put) {
+function PUT($req, PDO $db, $response) {
+    $put = [];
+    parse_str(file_get_contents("php://input"), $put);
 
+    try{
+        $putJson = $put['json'] ?? false;
+
+        if($putJson){
+            $put = json_decode($putJson, true);
+            // keep the 'json' property for backwards compatability
+            $put['json'] = $putJson;
+        }
+
+        $username = $put['username'];
+        $password = $put['password'];
+
+        $statement = $db->prepare('CALL get_user_username(?)');
+
+        $statement->execute([$username]);
+
+        $userResult = $statement->fetchAll()[0];
+        $statement->nextRowset();
+        $permissionsResult = $statement->fetchAll();
+
+        if(isset($userResult['error'])) {
+            throw new Exception($userResult['error']);
+        }
+
+        $success = password_verify($password, $userResult['hash']);
+
+        if(!$success) throw new Exception("Invalid password.");
+
+        $userResult[$userResult['role']] = true;
+
+        $_SESSION['user'] = $userResult;
+
+        $_SESSION['user']['permissions'] = $permissionsResult;
+
+        $result = $_SESSION['user'];
+
+        $response->status = 'OK';
+    } catch(Exception $error) {
+        $msg = $error->getMessage();
+
+        $result = ["error" => $error->getMessage()];
+
+        $response->status = "FAIL: $msg";
+    }
+
+    $response->outputJSON($result);
 }
