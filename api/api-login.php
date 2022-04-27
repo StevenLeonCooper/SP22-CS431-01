@@ -39,17 +39,26 @@ function POST($req, PDO $db, $response) {
             ':email' => $_POST['email'],
             ':first_name' => $_POST['first_name'],
             ':last_name' => $_POST['last_name'],
-            ':picture' => $_POST['picture'],
-            ':role_id' => $_POST['role_id']
         );
 
-        $statement = $db->prepare('CALL create_user(:username,:password,:email,:first_name,:last_name,:picture,:role_id)');
+        $statement = $db->prepare('CALL create_user(:username,:password,:email,:first_name,:last_name)');
 
         $statement->execute($params);
 
-        $result = $statement->fetchAll();
+        $result = $statement->fetchAll()[0];
 
-        $response->status = "OK";
+        $db = null;
+        $statement = null;
+
+        $conn = new Connection();
+        $db = $conn->PDO();
+
+        $req->put = [
+            "username" => $result["username"],
+            "password" => $result["password"]
+        ];
+
+        PUT($req, $db, $response);
     }
     catch(Exception $error) {
         $msg = $error->getMessage();
@@ -67,7 +76,7 @@ function PUT($req, PDO $db, $response) {
     parse_str(file_get_contents("php://input"), $put);
 
     try{
-        $putJson = $put['json'] ?? false;
+        $putJson = $put['json'] ?? $req->$put ?? false;
 
         if($putJson){
             $put = json_decode($putJson, true);
@@ -112,4 +121,10 @@ function PUT($req, PDO $db, $response) {
     }
 
     $response->outputJSON($result);
+}
+
+function DELETE($req, PDO $db, $response) {
+    session_destroy();
+    $response->status = "OK";
+    $response->outputJSON([]);
 }
