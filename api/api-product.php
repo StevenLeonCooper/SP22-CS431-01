@@ -2,6 +2,11 @@
 
 session_start();
 
+$user = $_SESSION['user'] ?? false;
+if($user == false) {
+    exit;
+}
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -19,6 +24,7 @@ if (!function_exists($method)) {
 
 require("helpers/mysql_setup.php");
 require("helpers/server.php");
+require("helpers/permissions.php");
 
 $put = [];
 parse_str(file_get_contents("php://input"), $put);
@@ -33,6 +39,15 @@ $method($_REQUEST, $db, $response);
 function GET($req, PDO $db, $response)
 {
     try {
+
+        $perms = new Permissions(1, 0, 0);
+
+        $user = $_SESSION['user'];
+        $userPerms = $user['permissions'];
+    
+        $uri = $_REQUEST['REQUEST_URI'];
+        $perms->verify($uri, $userPerms);
+
         $singleQuery = "call get_product(?)";
         $listQuery = "call get_all_products(?)";
         $query = isset($req['id']) ? $singleQuery : $listQuery;
@@ -60,6 +75,14 @@ function POST($req, PDO $db, $response)
 {
 
     try {
+        $perms = new Permissions(1, 1, 1);
+
+        $user = $_SESSION['user'];
+        $userPerms = $user['permissions'];
+    
+        $uri = $_REQUEST['REQUEST_URI'];
+        $perms->verify($uri, $userPerms);
+
         $postJson = $_POST['json'] ?? false;
 
         if($postJson){
@@ -100,6 +123,15 @@ function PUT($req, PDO $db, $response)
     $put = [];
     parse_str(file_get_contents("php://input"), $put);
     try {
+
+        $perms = new Permissions(1, 1, 1);
+
+        $user = $_SESSION['user'];
+        $userPerms = $user['permissions'];
+    
+        $uri = $_REQUEST['REQUEST_URI'];
+        $perms->verify($uri, $userPerms);
+
         $putJson = $put['json'] ?? false;
 
         if($putJson){
@@ -140,6 +172,15 @@ function PUT($req, PDO $db, $response)
 function DELETE($req, PDO $db, $response)
 {
     try {
+
+        $perms = new Permissions(1, 1, 1);
+
+        $user = $_SESSION['user'];
+        $userPerms = $user['permissions'];
+    
+        $uri = $_REQUEST['REQUEST_URI'];
+        $perms->verify($uri, $userPerms);
+
         $param = $req['id'];
 
         $statement = $db->prepare("CALL delete_product(?)");
