@@ -113,3 +113,9 @@ function PUT($req, PDO $db, $response) {
 
     $response->outputJSON($result);
 }
+
+function DELETE($req, PDO $db, $response) {
+    session_destroy();
+    $response->status = "OK";
+    $response->outputJSON([]);
+}
