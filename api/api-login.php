@@ -45,9 +45,20 @@ function POST($req, PDO $db, $response) {
 
         $statement->execute($params);
 
-        $result = $statement->fetchAll();
+        $result = $statement->fetchAll()[0];
 
-        $response->status = "OK";
+        $db = null;
+        $statement = null;
+
+        $conn = new Connection();
+        $db = $conn->PDO();
+
+        $req->put = [
+            "username" => $result["username"],
+            "password" => $result["password"]
+        ];
+
+        PUT($req, $db, $response);
     }
     catch(Exception $error) {
         $msg = $error->getMessage();
@@ -65,7 +76,7 @@ function PUT($req, PDO $db, $response) {
     parse_str(file_get_contents("php://input"), $put);
 
     try{
-        $putJson = $put['json'] ?? false;
+        $putJson = $put['json'] ?? $req->$put ?? false;
 
         if($putJson){
             $put = json_decode($putJson, true);
