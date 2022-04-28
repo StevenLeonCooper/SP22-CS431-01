@@ -42,7 +42,7 @@ function GET($req, PDO $db, $response)
 {
     try {
 
-        $perms = new Permissions(1, 0, 0);
+        $perms = new Permissions(1, 1, 1);
 
         $user = $_SESSION['user'];
         $userPerms = $user['permissions'];
