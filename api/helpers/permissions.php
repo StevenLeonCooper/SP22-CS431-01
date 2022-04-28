@@ -33,8 +33,6 @@ class Permissions
             }
         }
 
-        if($allow) return $allow;
-
-        throw new Exception("Permission Denied");
+        return $allow;
     }
 }
