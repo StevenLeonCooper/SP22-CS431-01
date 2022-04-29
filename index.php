@@ -21,7 +21,7 @@ if(!preg_match('/^[\w-]+$/', $page)){
 		<script>
 			window.user = <?php echo ($userJson); ?>;
 		</script>
-        <title>CPSC431 Wep App - Phase 2(<?php echo ($page); ?>)</title>
+        <title>CPSC431 Wep App - Phase 3(<?php echo ($page); ?>)</title>
 		<style>
 			<?php include("css/app.css"); ?>
 		</style>
