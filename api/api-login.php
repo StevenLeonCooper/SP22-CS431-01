@@ -23,6 +23,12 @@ $response = new Response();
 
 $method($_REQUEST, $db, $response);
 
+function GET($req, PDO $db, $response) {
+	$json = "{}";
+	header("Content-Type: application/json; charset=utf-8");
+    exit($json);
+}
+
 function POST($req, PDO $db, $response) {
     try {
         $postJson = $_POST['json'] ?? false;

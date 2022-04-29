@@ -44,7 +44,7 @@ if(!preg_match('/^[\w-]+$/', $page)){
             </nav>
 		</header>
 		<main>
-			<div id="<?php echo ("view_$page") ?>">&nbsp;</div>
+			<div id="<?php echo ("view_$page"); ?>">&nbsp;</div>
 		</main>
 		<footer>
 			<!-- This footer appears on every page. --> 

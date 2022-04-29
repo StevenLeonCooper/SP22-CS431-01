@@ -54,7 +54,7 @@ const productController = new Controller(productView, productModel);
             productModel.remove(id);
             productView.render(productModel.data);
         }
-    })
+    });
 
     document.addEventListener("submit", async (e) => {
 
@@ -86,6 +86,6 @@ const productController = new Controller(productView, productModel);
                 productView.render(productModel.data);
             }           
         }
-    })
+    });
 
 })();
