@@ -76,7 +76,7 @@ function POST($req, PDO $db, $response) {
         $response->status = "FAIL: $msg";
     }
 
-    $response->outputJSON($result);
+    $response->outputJSON();
 }
 
 function PUT($req, PDO $db, $response) {
@@ -95,7 +95,7 @@ function PUT($req, PDO $db, $response) {
         $username = $put['username'];
         $password = $put['password'];
 
-        $statement = $db->prepare('CALL get_user_username(?)');
+        $statement = $db->prepare('CALL get_user_by_uname(?)');
 
         $statement->execute([$username]);
 
@@ -128,7 +128,7 @@ function PUT($req, PDO $db, $response) {
         $response->status = "FAIL: $msg";
     }
 
-    $response->outputJSON($result);
+    $response->outputJSON();
 }
 
 function DELETE($req, PDO $db, $response) {

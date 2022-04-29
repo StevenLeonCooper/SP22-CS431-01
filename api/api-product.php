@@ -67,7 +67,7 @@ function GET($req, PDO $db, $response)
 
         $result = ["error" => $error->getMessage()];
 
-        $this->$response->status = "FAIL: $msg";
+        $response->status = "FAIL: $msg";
     }
 
     $response->outputJSON($result);
