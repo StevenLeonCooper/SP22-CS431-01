@@ -21,6 +21,8 @@ $conn = new Connection();
 $db = $conn->PDO();
 $response = new Response();
 
+$put = null;
+
 $method($_REQUEST, $db, $response);
 
 function GET($req, PDO $db, $response) {
@@ -61,9 +63,9 @@ function POST($req, PDO $db, $response) {
         $conn = new Connection();
         $db = $conn->PDO();
 
-        $req->put = [
+        $GLOBALS['put'] = [
             "username" => $result["username"],
-            "password" => $result["password"]
+            "password" => $result["pass_hash"]
         ];
 
         PUT($req, $db, $response);
@@ -76,7 +78,7 @@ function POST($req, PDO $db, $response) {
         $response->status = "FAIL: $msg";
     }
 
-    $response->outputJSON();
+    //$response->outputJSON();
 }
 
 function PUT($req, PDO $db, $response) {
@@ -84,7 +86,7 @@ function PUT($req, PDO $db, $response) {
     parse_str(file_get_contents("php://input"), $put);
 
     try{
-        $putJson = $put['json'] ?? $req->$put ?? false;
+        $putJson = $put['json'] ?? $GLOBALS['put'] ?? false;
 
         if($putJson){
             $put = json_decode($putJson, true);
