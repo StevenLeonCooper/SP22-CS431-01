@@ -47,7 +47,7 @@ function GET($req, PDO $db, $response)
         $user = $_SESSION['user'];
         $userPerms = $user['permissions'];
     
-        $uri = $_REQUEST['REQUEST_URI'];
+        $uri = $_SERVER['REQUEST_URI'];
         $perms->verify($uri, $userPerms);
 
         $singleQuery = "call get_product(?)";
@@ -82,7 +82,7 @@ function POST($req, PDO $db, $response)
         $user = $_SESSION['user'];
         $userPerms = $user['permissions'];
     
-        $uri = $_REQUEST['REQUEST_URI'];
+        $uri = $_SERVER['REQUEST_URI'];
         $perms->verify($uri, $userPerms);
 
         $postJson = $_POST['json'] ?? false;
@@ -131,7 +131,7 @@ function PUT($req, PDO $db, $response)
         $user = $_SESSION['user'];
         $userPerms = $user['permissions'];
     
-        $uri = $_REQUEST['REQUEST_URI'];
+        $uri = $_SERVER['REQUEST_URI'];
         $perms->verify($uri, $userPerms);
 
         $putJson = $put['json'] ?? false;
@@ -180,7 +180,7 @@ function DELETE($req, PDO $db, $response)
         $user = $_SESSION['user'];
         $userPerms = $user['permissions'];
     
-        $uri = $_REQUEST['REQUEST_URI'];
+        $uri = $_SERVER['REQUEST_URI'];
         $perms->verify($uri, $userPerms);
 
         $param = $req['id'];
