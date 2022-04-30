@@ -26,8 +26,8 @@ const loginController = new Controller(loginView, loginModel);
     }
 
     document.addEventListener("click", async (e) => {
-        e.preventDefault();
         if(e.target.dataset.action == "New User Registration") {
+            e.preventDefault();
             document.getElementById("reg_area").classList.toggle("hidden");
         }
     });
