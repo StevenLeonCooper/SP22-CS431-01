@@ -7,6 +7,10 @@ const productController = new Controller(productView, productModel);
 
 // This is an IIFE (Immediately Invoking Function Expression) which runs on startup.
 (async () => {
+    if(window.user["visitor"]) {
+        window.location = "login";
+    }
+
     await productController.setup();
 
     let productList = productController.model.list;

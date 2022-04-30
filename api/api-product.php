@@ -6,7 +6,9 @@ if(!isset($_SESSION)) {
 
 $user = $_SESSION['user'] ?? false;
 if($user == false) {
-    exit;
+    header($_SERVER["SERVER_PROTOCOL"] . " 403 Forbidden", true, 403);
+    $response = new Response();
+    $response->outputJSON("{}");
 }
 
 ini_set('display_errors', 1);
