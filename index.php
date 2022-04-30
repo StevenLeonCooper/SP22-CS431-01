@@ -36,9 +36,9 @@ if(!preg_match('/^[\w-]+$/', $page)){
 				<a href="product" title="Product Listings">Products</a>
 				<div>
 					<?php if ($user['user_id'] == false) { ?>
-						<a href="login" title="Login or Sign Up">Login or Sign Up</a>
+						<a href="login" title="Login or Sign Up" class="login-status-nav">Login or Sign Up</a>
 					<?php } else { ?>
-						<strong> Logged in as <?php echo ($username); ?><a href='login?logout=1'>(Log Out)</a></strong>
+						<strong class="login-status-nav"> Logged in as <?php echo ($username); ?><a href='login?logout=1'>(Log Out)</a></strong>
 					<?php } ?>
 				</div>
             </nav>

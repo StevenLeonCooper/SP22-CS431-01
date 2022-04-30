@@ -25,6 +25,12 @@ const loginController = new Controller(loginView, loginModel);
         window.location = "login?logged_out=1";
     }
 
+    document.addEventListener("click", async (e) => {
+        e.preventDefault();
+        if(e.target.dataset.action == "New User Registration") {
+            document.getElementById("reg_area").classList.toggle("hidden");
+        }
+    });
 
     document.addEventListener("submit", async (e) => {
 

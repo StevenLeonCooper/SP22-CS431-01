@@ -82,3 +82,18 @@ label{
     table-layout: fixed;
     width:100%;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+.clickable:hover {
+    text-decoration: underline overline;
+}
+
+.login-status-nav {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    text-align: right;
+}
