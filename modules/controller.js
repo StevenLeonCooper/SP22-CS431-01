@@ -21,7 +21,8 @@ export class Controller {
         //Standard inputs with value attributes. 
         form.querySelectorAll("input:not([type='radio']):not([type='checkbox']), select, textarea")
             .forEach((el) => {
-                formData[el.id] = el.value;
+                let identity = el.id ? el.id : el.name;
+                formData[identity] = el.value;
             });
 
         // Complex inputs with no simple "value" element to aggregate data. 

@@ -36,7 +36,7 @@ const loginController = new Controller(loginView, loginModel);
 
         e.preventDefault();
         if(e.target.dataset.action == "userLogin") {
-            let form_data = loginController.formData(e.currentTarget);
+            let form_data = loginController.formData(e.target);
             let newLogin = new Login(form_data);
 
             let result = await loginModel.put(newLogin);
@@ -47,7 +47,7 @@ const loginController = new Controller(loginView, loginModel);
         }
 
         if(e.target.dataset.action == "userSignup") {
-            let form_data = loginController.formData(e.currentTarget);
+            let form_data = loginController.formData(e.target);
             let newUser = new User(form_data);
 
             let result = await loginModel.post(newUser);
