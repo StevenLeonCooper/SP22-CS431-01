@@ -25,6 +25,11 @@ const loginController = new Controller(loginView, loginModel);
         window.location = "login?logged_out=1";
     }
 
+    let closeModal = function(e){ 
+        let wrapper = document.getElementById("modal-wrapper");
+        wrapper.remove();
+    }
+
     document.addEventListener("click", async (e) => {
         if(e.target.dataset.action == "New User Registration") {
             e.preventDefault();
@@ -43,6 +48,13 @@ const loginController = new Controller(loginView, loginModel);
             
             if(result.status.includes("OK")) {
                 window.location = "home";
+            }
+            else {
+                let partial = new PartialView("login-modal");
+                await partial.setup();
+                partial.renderModal(result);
+
+                document.getElementById("closeModal").addEventListener("click", closeModal);
             }
         }
 
