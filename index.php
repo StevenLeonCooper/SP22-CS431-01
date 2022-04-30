@@ -34,6 +34,7 @@ if(!preg_match('/^[\w-]+$/', $page)){
 			<nav>
 				<a href="home" title="Home Page">Home Page</a>
 				<a href="product" title="Product Listings">Products</a>
+				<a href="users" title="Users">Users</a>
 				<div>
 					<?php if ($user['user_id'] == false) { ?>
 						<a href="login" title="Login or Sign Up" class="login-status-nav">Login or Sign Up</a>
