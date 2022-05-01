@@ -116,8 +116,8 @@ function POST($req, PDO $db, $response)
             ':username' => $_POST['username'],
             ':password'  => $hashed_password,
             ':email' => $_POST['email'],
-            ':first_name' => $_POST['first_name'],
-            ':last_name' => $_POST['last_name'],
+            ':first_name' => $_POST['name_first'],
+            ':last_name' => $_POST['name_last'],
         );
 
         $statement = $db->prepare('CALL create_user(:username,:email,:first_name,:last_name,:password)');
@@ -167,15 +167,14 @@ function PUT($req, PDO $db, $response)
         
 
         $params = array(
-            ':id' => $put['id'],
+            ':id' => $put['user_id'],
             ':username' => $put['username'],
             ':email' => $put['email'],
-            ':first_name' => $put['first_name'],
-            ':last_name' => $put['last_name'],
-            ':password'  => $put['password'],
+            ':first_name' => $put['name_first'],
+            ':last_name' => $put['name_last'],
         );
 
-        $statement = $db->prepare('CALL update_product(:id,:title,:desc,:image,:price,:stock)');
+        $statement = $db->prepare('CALL update_user(:id,:username,:email,:first_name,:last_name)');
 
         $statement->execute($params);
 
@@ -186,7 +185,7 @@ function PUT($req, PDO $db, $response)
     }   catch (Exception $error) {
         $msg = $error->getMessage();
 
-        $result = ["error" => $error->getMessage()];
+        $result[0] = ["error" => $error->getMessage()];
 
         $response->status = "FAIL: $msg";
     }
@@ -218,7 +217,7 @@ function DELETE($req, PDO $db, $response) {
     } catch (Exception $error) {
         $msg = $error->getMessage();
 
-        $result = ["error" => $error->getMessage()];
+        $result[0] = ["error" => $error->getMessage()];
 
         $response->status = "FAIL: $msg";
     }

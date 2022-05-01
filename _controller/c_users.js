@@ -10,22 +10,47 @@ const userController = new Controller(userView, userModel);
         window.location = "login";
     }
 
-    console.log(window.user);
-
     await userController.setup();
 
     let userList = userController.model.list;
     
-    if(window.user.role == "user") {
-        userList.user = true;
-    }
-    else if(window.user.role == "admin") {
-        userList.admin = true;
+    let addUserRole = function(objToAddTo){   
+        if(window.user.role == "user") {
+            objToAddTo.user = true;
+        }
+        else if(window.user.role == "admin") {
+            objToAddTo.admin = true;
+        } 
     }
 
-       // Display users in the view.
-       console.log(userList);
-       if(userList.status.includes("OK")) {
-           userController.view.render(userList);
-       }       
+    
+    addUserRole(userList);
+
+    // Display users in the view.
+    if(userList.status.includes("OK")) {
+        userController.view.render(userList);
+    }
+
+    document.addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        if(e.target.dataset.action == "updateUser") {
+
+            let form_data = userController.formData(e.target);
+            let changedUser = new User(form_data);
+
+            let result = await userModel.put(changedUser);
+            changedUser = new User(result);
+            console.log(changedUser);
+
+            if(result.status.includes("OK")) {
+                userModel.update(changedUser);
+                addUserRole(userModel.data);
+                userView.render(userModel.data);
+            }
+        }
+
+    });
+       
 })();
