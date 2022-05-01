@@ -6,7 +6,9 @@ if(!isset($_SESSION)) {
 
 $user = $_SESSION['user'] ?? false;
 if($user == false) {
-    exit;
+    header($_SERVER["SERVER_PROTOCOL"] . " 403 Forbidden", true, 403);
+    $response = new Response();
+    $response->outputJSON("{}");
 }
 
 ini_set('display_errors', 1);
@@ -47,17 +49,17 @@ function GET($req, PDO $db, $response)
         $user = $_SESSION['user'];
         $userPerms = $user['permissions'];
     
-        $uri = $_REQUEST['REQUEST_URI'];
+        $uri = $_SERVER['REQUEST_URI'];
         $hasFullAccess = $perms->verify($uri, $userPerms);
 
         if(!$hasFullAccess) {
-            $req['id'] = $_SESSION['user']['id'];
+            $req['id'] = $_SESSION['user']['user_id'];
         }
 
         $singleQuery = "call get_user_by_uname(?)";
         $listQuery = "call get_all_users(?)";
         $query = isset($req['id']) ? $singleQuery : $listQuery;
-        $param = isset($req['id']) ? $req['id'] : ($req['sort_by'] ?? "username-asc");
+        $param = isset($req['id']) ? $user['username'] : ($req['sort_by'] ?? "username-asc");
 
         $statement = $db->prepare($query);
         
@@ -65,14 +67,19 @@ function GET($req, PDO $db, $response)
         
         $result = $statement->fetchAll();
 
+        $userResult = $result[0];
+        
+        if(isset($userResult['error'])) {
+            throw new Exception($userResult['error']);
+        }
+
         $response->status = "OK";
     } catch (Exception $error) {
         $msg = $error->getMessage();
 
-        $result = ["error" => $error->getMessage()];
+        $result[0] = ["error" => $error->getMessage()];
 
         $response->status = "FAIL: $msg";
     }
-
     $response->outputJSON($result);
 }

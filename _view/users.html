@@ -1,22 +1,22 @@
-{{#user.admin}}
+{{#admin}}
 <h1>Edit Users</h1>
-{{/user.admin}}
+{{/admin}}
 
-{{#user.user}}
+{{#user}}
 <h1>Edit Yourself</h1>
-{{/user.user}}
+{{/user}}
 
-{{#Items}}
+{{#items}}
+    {{#admin}}
     <form data-action="updateUser">
         <input type="hidden" name="user_id" value="{{id}}">
-        {{#user.admin}}
         <label>
             Username: <input name="username" type="text" size="10" value="{{username}}">
         </label>
         <label>
             Email: <input name="email" type="text" size="10" value="{{email}}">
         </label>
-        {{/user.admin}}
+
         <label>
             First Name: <input name="first_name" type="text" size="10" value="{{first_name}}">
         </label>
@@ -25,6 +25,27 @@
         </label>
 
         <button type="submit">Update User Info</button>
-{{/Items}}
+    {{/admin}}
+
+    {{#user}}
+    <form data-action="updateUser">
+        <input type="hidden" name="user_id" value="{{id}}">
+        <label>
+            Username: <input name="username" type="text" size="10" value="{{username}}" disabled>
+        </label>
+        <label>
+            Email: <input name="email" type="text" size="10" value="{{email}}" disabled>
+        </label>
+
+        <label>
+            First Name: <input name="first_name" type="text" size="10" value="{{first_name}}">
+        </label>
+        <label>
+            Last Name: <input name="last_name" type="text" size="10" value="{{last_name}}">
+        </label>
+
+        <button type="submit">Update User Info</button>
+    {{/user}}
+{{/items}}
 
 
