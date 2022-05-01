@@ -1,9 +1,7 @@
 button {
     margin:5px auto;
     display: block;
-    width: 99%;
-    background-color: #222;
-    color: #FFF;
+    width: 25%;
 }
 
 label {

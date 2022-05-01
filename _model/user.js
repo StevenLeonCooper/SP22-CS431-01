@@ -8,8 +8,8 @@ export class User extends Item {
         this.username = null;
         this.password = null;
         this.email = null;
-        this.first_name = null;
-        this.last_name = null;
+        this.name_first = null;
+        this.name_last = null;
 
         Object.assign(this, data);
     }
