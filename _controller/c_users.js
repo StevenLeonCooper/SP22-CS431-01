@@ -36,6 +36,17 @@ const userController = new Controller(userView, userModel);
             e.preventDefault();
             document.getElementById("create_form").classList.toggle("hidden");
         }
+
+        if(e.target.dataset.action == "deleteUser") {
+            e.preventDefault();
+
+            let user_id = e.target.dataset.id
+            let result = await userModel.delete(user_id);
+
+            userModel.remove(user_id);
+            addUserRole(userModel.data);
+            userView.render(userModel.data);
+        }
     });
 
     document.addEventListener("submit", async (e) => {
