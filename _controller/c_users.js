@@ -31,9 +31,31 @@ const userController = new Controller(userView, userModel);
         userController.view.render(userList);
     }
 
+    document.addEventListener("click", async (e) => {
+        if(e.target.dataset.action == "addNewUserButton") {
+            e.preventDefault();
+            document.getElementById("create_form").classList.toggle("hidden");
+        }
+    });
+
     document.addEventListener("submit", async (e) => {
 
         e.preventDefault();
+
+        if(e.target.dataset.action == "createUser") {
+        
+            let form_data = userController.formData(e.target);
+            let newUser = new User(form_data);
+
+            let result = await userModel.post(newUser);
+            newUser = new User(result);
+        
+            if(result.status.includes("OK")){
+                userModel.add(newUser);
+                addUserRole(userModel.data);
+                userView.render(userModel.data);
+            }
+        }
 
         if(e.target.dataset.action == "updateUser") {
 
@@ -42,7 +64,6 @@ const userController = new Controller(userView, userModel);
 
             let result = await userModel.put(changedUser);
             changedUser = new User(result);
-            console.log(changedUser);
 
             if(result.status.includes("OK")) {
                 userModel.update(changedUser);
