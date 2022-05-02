@@ -67,9 +67,11 @@ const productController = new Controller(productView, productModel);
             let id = e.target.dataset.id;
             let result = await productModel.delete(id);
 
-            closeModal();
-            productModel.remove(id);
-            productView.render(productModel.data);
+            if(result.status.includes("OK")) {
+                closeModal();
+                productModel.remove(id);
+                productView.render(productModel.data);
+            }
         }
     });
 

@@ -67,7 +67,7 @@ function GET($req, PDO $db, $response)
     } catch (Exception $error) {
         $msg = $error->getMessage();
 
-        $result = ["error" => $error->getMessage()];
+        $result[0] = ["error" => $error->getMessage()];
 
         $response->status = "FAIL: $msg";
     }
@@ -85,7 +85,11 @@ function POST($req, PDO $db, $response)
         $userPerms = $user['permissions'];
     
         $uri = $_SERVER['REQUEST_URI'];
-        $perms->verify($uri, $userPerms);
+        $hasAccess = $perms->verify($uri, $userPerms);
+
+        if(!$hasAccess) {
+            throw new Exception("Access Denied.");
+        }
 
         $postJson = $_POST['json'] ?? false;
 
@@ -114,7 +118,7 @@ function POST($req, PDO $db, $response)
     } catch (Exception $error) {
         $msg = $error->getMessage();
 
-        $result = ["error" => $error->getMessage()];
+        $result[0] = ["error" => $error->getMessage()];
 
         $response->status = "FAIL: $msg";
     }
@@ -134,7 +138,11 @@ function PUT($req, PDO $db, $response)
         $userPerms = $user['permissions'];
     
         $uri = $_SERVER['REQUEST_URI'];
-        $perms->verify($uri, $userPerms);
+        $hasAccess = $perms->verify($uri, $userPerms);
+
+        if(!$hasAccess) {
+            throw new Exception("Access Denied.");
+        }
 
         $putJson = $put['json'] ?? false;
 
@@ -165,7 +173,7 @@ function PUT($req, PDO $db, $response)
     }   catch (Exception $error) {
         $msg = $error->getMessage();
 
-        $result = ["error" => $error->getMessage()];
+        $result[0] = ["error" => $error->getMessage()];
 
         $response->status = "FAIL: $msg";
     }
@@ -183,7 +191,11 @@ function DELETE($req, PDO $db, $response)
         $userPerms = $user['permissions'];
     
         $uri = $_SERVER['REQUEST_URI'];
-        $perms->verify($uri, $userPerms);
+        $hasAccess = $perms->verify($uri, $userPerms);
+
+        if(!$hasAccess) {
+            throw new Exception("Access Denied.");
+        }
 
         $param = $req['id'];
 
@@ -191,17 +203,17 @@ function DELETE($req, PDO $db, $response)
 
         $statement->execute([$param]);
 
-        $result = $statement->fetchAll();
+        $result[0] = "success";
 
         $response->status = "OK";
 
     } catch (Exception $error) {
         $msg = $error->getMessage();
 
-        $result = ["error" => $error->getMessage()];
+        $result[0] = ["error" => $error->getMessage()];
 
         $response->status = "FAIL: $msg";
     }
 
-    $response->outputJSON();
+    $response->outputJSON($result);
 }

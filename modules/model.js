@@ -104,5 +104,8 @@ export class Model {
         let response = await fetch(this.dataUrl + `/?id=${id}`, {
             method: "DELETE"
         })
+
+        let jsonData = await response.json();
+        return new Result(jsonData);       
     }
 }
