@@ -15,6 +15,18 @@ const productController = new Controller(productView, productModel);
 
     let productList = productController.model.list;
 
+    let addUserRole = function(objToAddTo){   
+        if(window.user.role == "user") {
+            objToAddTo.user = true;
+        }
+        else if(window.user.role == "admin") {
+            objToAddTo.admin = true;
+        } 
+    }
+
+    
+    addUserRole(productList);
+
     // Display products in the view.
     console.log(productList);
     if(productList.status.includes("OK")) {
@@ -41,8 +53,9 @@ const productController = new Controller(productView, productModel);
 			
             let product = new Product(result);
 
-            console.log(product);
             
+            addUserRole(product);
+            console.log(product);
             partial.renderModal(product);
 
             document.getElementById("closeModal").addEventListener("click", closeModal);
