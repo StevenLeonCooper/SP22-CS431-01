@@ -9,7 +9,7 @@
 {{#items}}
     {{#admin}}
     <form data-action="updateUser">
-        <input type="hidden" name="user_id" value="{{id}}">
+        <input type="hidden" name="id" value="{{id}}">
         <label>
             Username: <input name="username" type="text" size="10" value="{{username}}">
         </label>
@@ -18,12 +18,13 @@
         </label>
 
         <label>
-            First Name: <input name="name_first" type="text" size="10" value="{{name_first}}">
+            First Name: <input name="first_name" type="text" size="10" value="{{first_name}}">
         </label>
         <label>
-            Last Name: <input name="name_last" type="text" size="10" value="{{name_last}}">
+            Last Name: <input name="last_name" type="text" size="10" value="{{last_name}}">
         </label>
 
+        <br>
         <button type="submit">Update User Info</button>
         <button type="button" data-action="deleteUser" data-id="{{id}}">Delete User</button>
         <hr>
@@ -32,7 +33,7 @@
 
     {{#user}}
     <form data-action="updateUser">
-        <input type="hidden" name="user_id" value="{{id}}">
+        <input type="hidden" name="id" value="{{id}}">
         <label>
             Username: <input name="username" type="text" size="10" value="{{username}}" disabled>
         </label>
@@ -41,12 +42,13 @@
         </label>
 
         <label>
-            First Name: <input name="name_first" type="text" size="10" value="{{name_first}}">
+            First Name: <input name="first_name" type="text" size="10" value="{{first_name}}">
         </label>
         <label>
-            Last Name: <input name="name_last" type="text" size="10" value="{{name_last}}">
+            Last Name: <input name="last_name" type="text" size="10" value="{{last_name}}">
         </label>
 
+        <br>
         <button type="submit">Update User Info</button>
     </form>
     {{/user}}
@@ -55,7 +57,7 @@
 {{#admin}}
 <button type="button" data-action="addNewUserButton">Add New User</button>
 <form id="create_form" data-action="createUser" class="hidden">
-    <input type="hidden" name="user_id" value="{{id}}">
+    <input type="hidden" name="id" value="{{id}}">
     <label>
         Username: <input name="username" type="text" size="10">
     </label>
@@ -66,10 +68,10 @@
         Password: <input name="password" type="password" size="10">
     </label>
     <label>
-        First Name: <input name="name_first" type="text" size="10">
+        First Name: <input name="first_name" type="text" size="10">
     </label>
     <label>
-        Last Name: <input name="name_last" type="text" size="10">
+        Last Name: <input name="last_name" type="text" size="10">
     </label>
 
     <button type="submit">Submit</button>

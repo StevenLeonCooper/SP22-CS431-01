@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$user = $_SESSION['user'] ?? ["userid" => false, "visitor" => true];
+$user = $_SESSION['user'] ?? ["id" => false, "visitor" => true];
 $username = $user['username'] ?? "";
 $userJson = json_encode($user);
 
@@ -36,7 +36,7 @@ if(!preg_match('/^[\w-]+$/', $page)){
 				<a href="product" title="Product Listings">Products</a>
 				<a href="users" title="Users">Users</a>
 				<div>
-					<?php if ($user['user_id'] == false) { ?>
+					<?php if ($user['id'] == false) { ?>
 						<a href="login" title="Login or Sign Up" class="login-status-nav">Login or Sign Up</a>
 					<?php } else { ?>
 						<strong class="login-status-nav"> Logged in as <?php echo ($username); ?><a href='login?logout=1'>(Log Out)</a></strong>

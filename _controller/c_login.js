@@ -48,6 +48,7 @@ const loginController = new Controller(loginView, loginModel);
             
             if(result.status.includes("OK")) {
                 window.location = "home";
+                console.log(window.user);
             }
             else {
                 let partial = new PartialView("login-modal");

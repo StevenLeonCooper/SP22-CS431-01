@@ -65,7 +65,7 @@ function POST($req, PDO $db, $response) {
 
         $GLOBALS['put'] = [
             "username" => $result["username"],
-            "password" => $result["pass_hash"]
+            "password" => $result["password"]
         ];
 
         PUT($req, $db, $response);
@@ -97,7 +97,7 @@ function PUT($req, PDO $db, $response) {
         $username = $put['username'];
         $password = $put['password'];
 
-        $statement = $db->prepare('CALL get_user_by_uname(?)');
+        $statement = $db->prepare('CALL get_user_by_username(?)');
 
         $statement->execute([$username]);
 
@@ -109,7 +109,7 @@ function PUT($req, PDO $db, $response) {
             throw new Exception($userResult['error']);
         }
 
-        $success = password_verify($password, $userResult['hash']);
+        $success = password_verify($password, $userResult['password']);
 
         if(!$success) throw new Exception("Invalid password.");
 

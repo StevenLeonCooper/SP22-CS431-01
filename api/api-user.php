@@ -53,10 +53,10 @@ function GET($req, PDO $db, $response)
         $hasFullAccess = $perms->verify($uri, $userPerms);
 
         if(!$hasFullAccess) {
-            $req['id'] = $_SESSION['user']['user_id'];
+            $req['id'] = $_SESSION['user']['id'];
         }
 
-        $singleQuery = "call get_user_by_uname(?)";
+        $singleQuery = "call get_user_by_username(?)";
         $listQuery = "call get_all_users(?)";
         $query = isset($req['id']) ? $singleQuery : $listQuery;
         $param = isset($req['id']) ? $user['username'] : ($req['sort_by'] ?? "username-asc");
@@ -116,8 +116,8 @@ function POST($req, PDO $db, $response)
             ':username' => $_POST['username'],
             ':password'  => $hashed_password,
             ':email' => $_POST['email'],
-            ':first_name' => $_POST['name_first'],
-            ':last_name' => $_POST['name_last'],
+            ':first_name' => $_POST['first_name'],
+            ':last_name' => $_POST['last_name'],
         );
 
         $statement = $db->prepare('CALL create_user(:username,:email,:first_name,:last_name,:password)');
@@ -167,11 +167,11 @@ function PUT($req, PDO $db, $response)
         
 
         $params = array(
-            ':id' => $put['user_id'],
+            ':id' => $put['id'],
             ':username' => $put['username'],
             ':email' => $put['email'],
-            ':first_name' => $put['name_first'],
-            ':last_name' => $put['name_last'],
+            ':first_name' => $put['first_name'],
+            ':last_name' => $put['last_name'],
         );
 
         $statement = $db->prepare('CALL update_user(:id,:username,:email,:first_name,:last_name)');
