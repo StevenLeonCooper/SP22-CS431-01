@@ -1,8 +1,10 @@
 <h1>Products Page</h1>
 <hr>
+{{#admin}}
 <button id="AddProductButton" type="button" data-action="toggleElement" data-for="#AddProductForm">
     Add Product
 </button>
+{{/admin}}
 <div id="AddProductForm" class="detail-form hidden">
     <form id="APF" data-action="addNewProduct" data-ajax="true">
         <input type="hidden" id="id" value="null">
