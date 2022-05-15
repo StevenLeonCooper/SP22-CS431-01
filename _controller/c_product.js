@@ -105,6 +105,37 @@ const productController = new Controller(productView, productModel);
                 productView.render(productModel.data);
             }           
         }
-    });
+        if(e.target.dataset.action == "uploadNewImage") {
+            var data = new FormData();
+            var form = e.currentTarget;
+            //var input = e.currentTarget.querySelectorAll("input:not([type='radio']):not([type='checkbox']), select, textarea");
+            var input = form.querySelector('input[type="file"]');
+            console.log(input);
+
+            data.append('file', input.files[0]);
+            data.append('user', 'team001');
+
+            let upload = await fetch('api/image', {
+                method: 'post',
+                body: data
+            });
+
+            let output = await upload.json();
+
+            if (output.URL) {
+                let form_data = productController.formData(form);
+                let changedProduct = new Product(form_data);
+                changedProduct.image_url = output.URL
+                let result = await productModel.put(changedProduct);
+                changedProduct = new Product(result);
+                
+                if(result.status.includes("OK")) {
+                    closeModal();
+                    productModel.update(changedProduct);
+                    productView.render(productModel.data);
+                }
+        }
+    }
+});
 
 })();
