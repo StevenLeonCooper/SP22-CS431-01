@@ -8,6 +8,17 @@
             <strong>{{title}}</strong><br>
             <strong>${{price}}</strong><br>
             <img src="{{image_url}}" alt = "{{title}}"/><br>
+            {{#admin}}
+            <form data-action="uploadNewImage">
+
+                <input type="hidden" id="id" value="{{id}}"/>
+                <input type="hidden" id="title" value="{{title}}"/>
+                <input type="hidden" id="price" value="{{price}}"/>
+                <input type="hidden" id="description" value="{{description}}"/>
+                <input type="hidden" id="stock" value="{{stock}}"/>
+                <input type="file" id="file"><button type="submit">Upload New Image</button>
+            </form>
+            {{/admin}}
             <p>
                 {{description}}
             </p>
