@@ -21,7 +21,7 @@ if(!preg_match('/^[\w-]+$/', $page)){
 		<script>
 			window.user = <?php echo ($userJson); ?>;
 		</script>
-        <title>CPSC431 Wep App - Phase 3(<?php echo ($page); ?>)</title>
+        <title>CPSC431 App - Phase 4(<?php echo ($page); ?>)</title>
 		<style>
 			<?php include("css/app.css"); ?>
 		</style>
@@ -35,6 +35,7 @@ if(!preg_match('/^[\w-]+$/', $page)){
 				<a href="home" title="Home Page">Home Page</a>
 				<a href="product" title="Product Listings">Products</a>
 				<a href="users" title="Users">Users</a>
+				<a href="cart" title="Shopping Cart">Shopping Cart</a>
 				<div>
 					<?php if ($user['id'] == false) { ?>
 						<a href="login" title="Login or Sign Up" class="login-status-nav">Login or Sign Up</a>
