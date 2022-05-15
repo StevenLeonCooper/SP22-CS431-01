@@ -1,0 +1,50 @@
+<div id="modal-wrapper" class="modal-wrapper" title="Close Window">
+    <div class="modal-content" title="">
+        {{^options.noclose}}
+        <button id="closeModal" data-action="closeModal" type="button" class="close-modal-x" title="Close Window">&#10060;</button>
+        <hr class="modal-x-separator">
+        {{/options.noclose}}            
+        <div class="product-popup">
+            <strong>{{title}}</strong><br>
+            <strong>${{price}}</strong><br>
+            <img src="{{image_url}}" alt = "{{title}}"/><br>
+            {{#admin}}
+            <form data-action="uploadNewImage">
+
+                <input type="hidden" id="id" value="{{id}}"/>
+                <input type="hidden" id="title" value="{{title}}"/>
+                <input type="hidden" id="price" value="{{price}}"/>
+                <input type="hidden" id="description" value="{{description}}"/>
+                <input type="hidden" id="stock" value="{{stock}}"/>
+                <input type="file" id="file"><button type="submit">Upload New Image</button>
+            </form>
+            {{/admin}}
+            <p>
+                {{description}}
+            </p>
+            <p>
+                {{#admin}}
+                <button class="delete-button" type="button" data-action="deleteProduct" data-id="{{id}}">
+                    Delete Product
+                </button>
+                {{/admin}}
+            </p>
+            {{#admin}}
+            <hr>
+            <button id="UpdateProductButton" type="button" data-action="toggleElement" data-for="#UpdateProductForm">Update Product</button>
+            <div id="UpdateProductForm" class="hidden detail-form">
+                <form data-action="updateProduct" data-ajax="true">
+                    <input type="hidden" id="id" value="{{id}}"/>
+                    <label>Title:<input type="text" id="title" maxlength="100" size="30" value="{{title}}"></label>
+                    <label>Price:<input type="text" id="price" maxlength="100" size="30" value="{{price}}"></label>
+                    <label>Desc.:<input type="text" id="description" maxlength="100" size="30" value="{{description}}"></label>
+                    <label>Image URL:<input type="text" id="image_url" maxlength="100" size="30" value="{{image_url}}"></label>
+                    <label>Stock:<input type="text" id="stock" maxlength="100" size="30" value="{{stock}}"></label>
+                    <hr/>
+                    <button type="submit">Submit</button>
+                </form>
+                {{/admin}}
+            </div>
+        </div>
+    </div>
+</div>
