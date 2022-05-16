@@ -17,7 +17,10 @@
                 <tr>
                     <td>{{title}}</td>
                     <td>{{price}}</td>
-                    <td><input type="number" name="quantity" data-id="{{id}}" data-action="updateQuantity" data-price="{{price}}" data-tp="TP{{id}}" value="{{quantity}}"></td>
+                    <td>
+						<input type="number" name="quantity" data-id="{{id}}" data-action="updateQuantity" data-price="{{price}}" data-tp="TP{{id}}" value="{{quantity}}">
+						<button data-id="{{id}}" data-action="removeFromCart">&#10060;</button>
+					</td>
                     <td>$<input type="text" disabled name="TP{{id}}" disabled class = "total-price" value="{{totalPrice}}"></td>
                 </tr>
                 {{/items}}
@@ -27,8 +30,9 @@
                 </tr>
             </tbody>
         </table>
+		<button id="clearCartButton" data-action="clearCart">Empty Cart</button>
     </div>
 <hr>
 <h2>Complete Your Purchase</h2>
-<button data-action="completePurchase" type="button">Buy Now!</button>
+<button data-action="completePurchase">Buy Now!</button>
 </section>

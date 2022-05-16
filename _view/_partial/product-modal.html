@@ -8,6 +8,11 @@
             <strong>{{title}}</strong><br>
             <strong>${{price}}</strong><br>
             <img src="{{image_url}}" alt = "{{title}}"/><br>
+			<form data-action="addToCart">
+				<input type="hidden" id="product_id" value="{{id}}"/>
+				<label>Quantity<input type="text" id="quantity" maxlength="3" size="30" value="1"></label>
+				<button type="submit">Add to cart</button>
+			</form>
             {{#admin}}
             <form data-action="uploadNewImage">
 

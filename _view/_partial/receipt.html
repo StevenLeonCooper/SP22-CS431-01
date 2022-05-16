@@ -1,0 +1,38 @@
+<div id="modal-wrapper" class="modal-wrapper" title="Close Window">
+    <div class="modal-content" title="">
+        {{^options.noclose}}
+        <button id="closeModal" data-action="closeModal" type="button" class="close-modal-x" title="Close Window">&#10060;</button>
+        <hr class="modal-x-separator">
+        {{/options.noclose}}
+		   
+		<div class="full-receipt">
+			<button style="position: absolute; top:2px; right:3px;" onclick=" javascript: window.print()" class="btn-print">Print</button>
+		<h1> Your Receipt</h1>
+
+		<table class="receipt">
+			<thead>
+				<tr>
+					<th>Product</th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#items}}
+				<tr>
+					<td>{{title}}</td>
+					<td>${{price}}</td>
+					<td>x{{quantity}}</td>
+					<td class="receipt-item-price" >$<span class='receipt-item-price'> {{totalPrice}}</span></td>
+				</tr>
+				{{/items}}
+				<tr>
+					<td colspan="2"> TOTAL PAID: </td>
+					<td colspan="2">$<span class='receipt-total-cost'>{{totalCost}}</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+</div>

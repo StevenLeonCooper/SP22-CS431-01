@@ -1,4 +1,5 @@
 {
     "title": "Home Page",
-    "greeting": "Welcome to the Banana Bunch Online Store!"
+    "greeting": "Welcome to the Banana Bunch Online Store!",
+    "status": "OK"
 }

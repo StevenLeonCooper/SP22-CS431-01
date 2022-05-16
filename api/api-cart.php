@@ -56,17 +56,17 @@ function POST($req, PDO $db, $response) {
         }
 
         $params = array(
-            ':id' => $_POST['id'],
+            ':user_id' => $_SESSION['user']['id'],
             ':product_id' => $_POST['product_id'],
-            ':quantity' => $_POST['quantity']
+            ':quantity' => intval($_POST['quantity'])
         );
 
-        $statement = $db->prepare('CALL add_to_cart(?)');
+        $statement = $db->prepare('CALL add_to_cart(:user_id, :product_id, :quantity)');
 
         $statement->execute($params);
 
         $result = $statement->fetchAll();
-
+        $response->status = "OK";
         
     }
     catch(Exception $error) {
@@ -77,7 +77,7 @@ function POST($req, PDO $db, $response) {
         $response->status = "FAIL: $msg";
     }
 
-    $response->outputJSON($result);
+    $response->outputJSON($_POST);
 }
 
 function PUT($req, PDO $db, $response) {
@@ -98,6 +98,7 @@ function PUT($req, PDO $db, $response) {
     $statement = $db->prepare('CALL update_cart(:id, :quantity)');
     $statement->execute($params);
     $result = $statement->fetchAll(); 
+    $response->status = "OK";
     } catch (Exception $error) {
         $msg = $error->getMessage();
         $result[0] = ["error" => $error->getMessage()];
@@ -107,5 +108,21 @@ function PUT($req, PDO $db, $response) {
 }
 
 function DELETE($req, PDO $db, $response) {
-
+    
+    try {
+        $deleteQuery = "CALL delete_from_cart(?)";
+        $deleteAll = "call clear_cart(?)";
+        $cond = $req['id'] == "undefined";
+        $query = $cond ? $deleteAll : $deleteQuery;
+        $param = $cond ? $_SESSION['user']['id'] : $req['id'];
+        $statement = $db->prepare($query);
+        $statement->execute([$param]);
+        $result = $statement->fetchAll();
+        $response->status = "OK";
+    } catch (Exception $error) {
+        $msg = $error->getMessage();
+        $result[0] = ["error" => $error->getMessage()];
+        $response->status = "FAIL: $msg";
+    }
+    $response->outputJSON($result);
 }

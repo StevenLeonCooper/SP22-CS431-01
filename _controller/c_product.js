@@ -1,5 +1,6 @@
 import {Model, View, PartialView, Controller} from '../modules/controller.js';
 import {Product} from '../_model/product.js';
+import {Cart} from '../_model/cart.js';
 
 const productModel = new Model(Product);
 const productView = new View("product");
@@ -82,6 +83,7 @@ const productController = new Controller(productView, productModel);
 
             let form_data = productController.formData(e.currentTarget);
             let newProduct = new Product(form_data);
+
             let result = await productModel.post(newProduct);
             newProduct = new Product(result);
         
@@ -94,6 +96,7 @@ const productController = new Controller(productView, productModel);
 
             let form_data = productController.formData(e.currentTarget);
             let changedProduct = new Product(form_data);
+
             let result = await productModel.put(changedProduct);
             changedProduct = new Product(result);
         
@@ -134,6 +137,24 @@ const productController = new Controller(productView, productModel);
                 }
         }
     }
+
+	if (e.target.dataset.action == "addToCart") {
+		console.log("You tried to add something to your cart!!");
+		var data = new FormData();
+		var form = e.currentTarget;
+		let productId = form.querySelector("#product_id").value;
+		let quantity = form.querySelector("#quantity").value;
+
+		data.append('product_id', productId);
+		data.append('quantity', quantity);
+
+		let upload = await fetch('api/cart', {
+			method: 'post',
+			body: data
+		});
+
+		let output = await upload.json();
+	}
 });
 
 })();
