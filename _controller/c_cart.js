@@ -22,7 +22,8 @@ const cartController = new Controller(cartView, cartModel);
     console.log(`cart.status == ${cart.status}`);
     if(cart.status.includes("OK")) {
         cart.totalCost=0;
-        cart.items.forEach(x => cart.totalCost += parseFloat(x.totalPrice));
+        cart.items.forEach(x => x.totalPrice = parseFloat(x._totalPrice()));
+        cart.items.forEach(x => cart.totalCost += parseFloat(x._totalPrice()));
         cartView.render(cart);
     }
 
