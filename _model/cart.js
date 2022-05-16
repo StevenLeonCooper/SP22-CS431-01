@@ -8,28 +8,26 @@ export class Cart extends Item {
         this.product = 0;
 		this.quantity = 0;
         this.price = 0;
-        this._quantity = 0;
-        this._totalPrice = 0;
 
         Object.assign(this, data);
     }
-    get price() {
-        return parseFloat(this._price);
+    get _price() {
+        return parseFloat(this.price);
     }
 
-    set price(value){
-        this._price = value;
+    set _price(value){
+        this.price = value;
     }
 
-    get quantity() {
-        return parseInt(this._quantity);
+    get _quantity() {
+        return parseInt(this.quantity);
     }
 
-    set quantity(value) {
-        this._quantity= value;
+    set _quantity(value) {
+        this.quantity= value;
     }
 
-    get totalPrice() {
+    _totalPrice() {
         return (this.price * this.quantity).toFixed(2);
     }
 }
