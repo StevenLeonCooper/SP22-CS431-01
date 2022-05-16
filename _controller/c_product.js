@@ -82,7 +82,6 @@ const productController = new Controller(productView, productModel);
 
             let form_data = productController.formData(e.currentTarget);
             let newProduct = new Product(form_data);
-
             let result = await productModel.post(newProduct);
             newProduct = new Product(result);
         
@@ -95,7 +94,6 @@ const productController = new Controller(productView, productModel);
 
             let form_data = productController.formData(e.currentTarget);
             let changedProduct = new Product(form_data);
-
             let result = await productModel.put(changedProduct);
             changedProduct = new Product(result);
         
