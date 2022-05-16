@@ -13,11 +13,17 @@
                 </tr>
             </thead>
             <tbody>
+                {{#items}}
                 <tr>
                     <td>{{title}}</td>
                     <td>{{price}}</td>
                     <td><input type="number" name="quantity" data-id="{{id}}" data-action="updateQuantity" data-price="{{price}}" data-tp="TP{{id}}" value="{{quantity}}"></td>
                     <td>$<input type="text" disabled name="TP{{id}}" disabled class = "total-price" value="{{totalPrice}}"></td>
+                </tr>
+                {{/items}}
+                <tr>
+                    <td colspan="2">TOTAL COST:</td>
+                    <td colspan="2">$<input type="text" disabled="" class="total-cost" value="{{totalCost}}"></td>
                 </tr>
             </tbody>
         </table>
