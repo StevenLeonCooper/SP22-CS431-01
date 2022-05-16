@@ -1,0 +1,28 @@
+<h1>Shopping Cart</h1>
+<hr>
+<section class="body-content">
+    <!-- Table goes here-->
+    <div id = "view_cart">
+        <table class="shopping-cart">
+            <thead>
+                <tr> 
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{title}}</td>
+                    <td>{{price}}</td>
+                    <td><input type="number" name="quantity" data-id="{{id}}" data-action="updateQuantity" data-price="{{price}}" data-tp="TP{{id}}" value="{{quantity}}"></td>
+                    <td>$<input type="text" disabled name="TP{{id}}" disabled class = "total-price" value="{{totalPrice}}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<hr>
+<h2>Complete Your Purchase</h2>
+<button data-action="completePurchase" type="button">Buy Now!</button>
+</section>
